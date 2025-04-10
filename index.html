@@ -6,76 +6,134 @@
   <title>نظام حجز جلسات - مهيلة ديوان الشموخ</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    :root {
-      --primary-color: #2c786c;
-      --secondary-color: #ff9800;
-      --background-gradient: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    }
-
+    /* تحسينات التصميم الأساسية */
     body {
       font-family: "Tajawal", sans-serif;
       direction: rtl;
-      background: var(--background-gradient);
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
       margin: 0;
-      min-height: 100vh;
-      position: relative;
+      padding: 20px;
       color: #333;
-    }
-
-    .container {
-      max-width: 750px;
-      margin: 0 auto;
-      background: rgba(255, 255, 255, 0.95);
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      backdrop-filter: blur(10px);
-      position: relative;
-      top: 20px;
+      min-height: 100vh;
     }
 
     .header {
+      background: linear-gradient(45deg, #2c786c, #235347);
+      padding: 2rem;
       text-align: center;
-      margin-bottom: 30px;
-      position: relative;
+      border-radius: 15px;
+      color: #fff;
+      margin: 20px auto;
+      max-width: 650px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      animation: slideIn 0.8s ease;
     }
 
-    .header::after {
-      content: '';
-      position: absolute;
-      bottom: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 120px;
-      height: 3px;
-      background: var(--primary-color);
+    .container {
+      max-width: 650px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.98);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      backdrop-filter: blur(8px);
+      transform: translateY(0);
+      transition: all 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
     }
 
     h1, h2 {
-      color: var(--primary-color);
-      margin: 10px 0;
-    }
-
-    .form-section {
-      border: 2px solid #eee;
-      border-radius: 15px;
-      padding: 20px;
-      margin: 20px 0;
+      text-align: center;
+      color: #2c786c;
+      margin: 1rem 0;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     }
 
     label {
       display: block;
-      margin: 20px 0 8px;
+      margin: 1rem 0 0.5rem;
       font-weight: 600;
-      color: var(--primary-color);
+      color: #2c786c;
     }
 
-    .input-group {
+    input, select {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 1rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #2c786c;
+      box-shadow: 0 0 10px rgba(44, 120, 108, 0.2);
+      outline: none;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 1rem;
+      margin-top: 1.5rem;
+      background: linear-gradient(45deg, #2c786c, #235347);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(44, 120, 108, 0.3);
+    }
+
+    .confirmation {
+      display: none;
+      margin-top: 2rem;
+      background: #e3f2fd;
+      padding: 2rem;
+      border-radius: 15px;
+      border-left: 5px solid #2c786c;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .notes {
+      font-size: 0.95em;
+      margin-top: 1.5rem;
+      background: #f0f8ff;
+      padding: 1rem;
+      border-left: 4px solid #3498db;
+      border-radius: 8px;
+    }
+
+    /* تأثيرات الحركة */
+    @keyframes slideIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* أيقونات Font Awesome */
+    .input-icon {
       position: relative;
-      margin-bottom: 20px;
     }
 
-    .input-group i {
+    .input-icon i {
       position: absolute;
       left: 15px;
       top: 50%;
@@ -83,163 +141,66 @@
       color: #666;
     }
 
-    input, select {
-      width: 100%;
-      padding: 12px 45px 12px 20px;
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      font-size: 16px;
-      transition: all 0.3s ease;
-    }
-
-    input:focus, select:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 8px rgba(44, 120, 108, 0.2);
-      outline: none;
-    }
-
-    .price-display {
-      display: flex;
-      gap: 15px;
-      margin: 20px 0;
-    }
-
-    .price-box {
-      flex: 1;
-      background: #f8f9fa;
-      padding: 15px;
-      border-radius: 8px;
-      text-align: center;
-    }
-
-    .btn {
-      background: var(--primary-color);
-      color: white;
-      padding: 15px 30px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 18px;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .btn:hover {
-      background: #235347;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-
-    .confirmation {
-      display: none;
-      background: #e3f2fd;
-      border-radius: 15px;
-      padding: 25px;
-      margin-top: 30px;
-      animation: fadeIn 0.5s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .booking-details {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      margin: 20px 0;
-    }
-
-    .detail-item {
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      border-left: 4px solid var(--primary-color);
-    }
-
-    .notes {
-      background: #fff3e0;
-      border-left: 4px solid var(--secondary-color);
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 20px;
-    }
-
-    .calendar-icon {
-      position: fixed;
-      bottom: 30px;
-      left: 30px;
-      background: var(--primary-color);
-      color: white;
-      padding: 15px;
-      border-radius: 50%;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-
+    /* تحسينات للجوال */
     @media (max-width: 768px) {
       .container {
-        margin: 10px;
-        padding: 20px;
+        padding: 1.5rem;
+        margin: 0 15px;
+        width: calc(100% - 30px);
       }
       
-      .booking-details {
-        grid-template-columns: 1fr;
+      .header {
+        padding: 1.5rem;
+        margin: 15px auto;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>مهيلة ديوان الشموخ</h1>
-      <h2>نظام حجز الجلسات المميزة</h2>
-    </div>
+  <div class="header">
+    <h1>مهيلة ديوان الشموخ</h1>
+    <h2>نظام حجز الجلسات</h2>
+  </div>
 
+  <div class="container">
     <form id="bookingForm">
-      <div class="form-section">
-        <label for="sessionType"><i class="fas fa-couch"></i> نوع الجلسة</label>
+      <div class="input-icon">
+        <i class="fas fa-couch"></i>
         <select id="sessionType" required>
           <option value="جلسة صغير">جلسة صغير (200 ريال)</option>
           <option value="جلسة كبيرة">جلسة كبيرة (350 ريال)</option>
           <option value="VIP">جلسة VIP (500 ريال)</option>
         </select>
+      </div>
 
-        <div class="input-group">
-          <i class="fas fa-user"></i>
-          <input type="text" id="clientName" placeholder="اسم العميل" required>
-        </div>
+      <div class="input-icon">
+        <i class="fas fa-user"></i>
+        <input type="text" id="clientName" placeholder="اسم العميل" required>
+      </div>
 
-        <div class="input-group">
-          <i class="fas fa-phone"></i>
-          <input type="tel" id="phone" placeholder="رقم الهاتف (مثال: 0551234567)" pattern="05\d{8}" required>
-        </div>
+      <div class="input-icon">
+        <i class="fas fa-phone"></i>
+        <input type="tel" id="phone" placeholder="رقم الهاتف (مثال: 0551234567)" pattern="05\d{8}" required>
+      </div>
 
-        <div class="input-group">
-          <i class="fas fa-calendar-alt"></i>
-          <input type="date" id="bookingDate" min="" required>
-        </div>
+      <div class="input-icon">
+        <i class="fas fa-calendar-day"></i>
+        <input type="date" id="bookingDate" required>
+      </div>
 
-        <div class="input-group">
-          <i class="fas fa-clock"></i>
-          <input type="time" id="bookingTime" required>
-        </div>
+      <div class="input-icon">
+        <i class="fas fa-clock"></i>
+        <input type="time" id="bookingTime" required>
+      </div>
 
-        <div class="price-display">
-          <div class="price-box">
-            <label>السعر الكلي</label>
-            <input type="number" id="price" value="200" readonly>
-          </div>
-          
-          <div class="price-box">
-            <label>المبلغ المدفوع</label>
-            <input type="number" id="paid" min="0" required>
-          </div>
-        </div>
+      <div class="input-icon">
+        <i class="fas fa-tag"></i>
+        <input type="number" id="price" placeholder="السعر (ريال)" required>
+      </div>
+
+      <div class="input-icon">
+        <i class="fas fa-money-bill-wave"></i>
+        <input type="number" id="paid" placeholder="المبلغ المدفوع (ريال)" required>
       </div>
 
       <button type="submit" class="btn">
@@ -249,37 +210,56 @@
     </form>
 
     <div class="confirmation" id="confirmation">
-      <!-- ... نفس محتوى التأكيد السابق مع إضافة الأيقونات ... -->
+      <!-- ... نفس محتوى التأكيد مع إضافة الأيقونات ... -->
     </div>
-  </div>
-
-  <div class="calendar-icon">
-    <i class="fas fa-calendar-check"></i>
   </div>
 
   <script>
     // تحسينات JavaScript
     document.getElementById('sessionType').addEventListener('change', function() {
-      const prices = {'جلسة صغير': 200, 'جلسة كبيرة': 350, 'VIP': 500};
+      const prices = {
+        'جلسة صغير': 200,
+        'جلسة كبيرة': 350,
+        'VIP': 500
+      };
       document.getElementById('price').value = prices[this.value];
     });
 
-    // تحديد الحد الأدنى للتاريخ كتاريخ اليوم
+    // التحقق من رقم الهاتف
+    document.getElementById('phone').addEventListener('input', function(e) {
+      this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+    });
+
+    // منع التواريخ السابقة
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('bookingDate').min = today;
 
-    // التحقق من رقم الهاتف
-    document.getElementById('phone').addEventListener('input', function(e) {
-      this.value = this.value.replace(/[^0-9]/g, '');
+    // إضافة تأثيرات عند الإرسال
+    document.getElementById("bookingForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      
+      // تأثير اهتزاز عند وجود أخطاء
+      if (!this.checkValidity()) {
+        this.classList.add('invalid-form');
+        setTimeout(() => this.classList.remove('invalid-form'), 500);
+        return;
+      }
+
+      // ... بقية كود الإرسال ...
     });
 
-    // منع المبلغ المدفوع من تجاوز السعر
-    document.getElementById('paid').addEventListener('input', function() {
-      const max = parseFloat(document.getElementById('price').value);
-      if (this.value > max) this.value = max;
-    });
-
-    // ... بقية الدوال مع إضافة تحسينات في إرسال الواتساب ...
+    // إضافة تأثيرات CSS للخطأ
+    style.innerHTML += `
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(5px); }
+        75% { transform: translateX(-5px); }
+      }
+      .invalid-form {
+        animation: shake 0.3s ease;
+        border-color: #ff4444 !important;
+      }
+    `;
   </script>
 </body>
 </html>
