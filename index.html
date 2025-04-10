@@ -6,6 +6,7 @@
     <title>نظام حجز جلسات - مهيلة ديوان الشموخ</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@amireh/xarabic@latest/dist/xarabic.min.js"></script>
     <style>
         body {
             font-family: "Arial", sans-serif;
@@ -261,10 +262,17 @@
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF();
                 
-                doc.setFontSize(18);
-                doc.text('تأكيد الحجز - مهيلة ديوان الشموخ', 15, 20);
+                // إضافة خط عربي
+                doc.addFileToVFS('Amiri-Regular.ttf', 'https://fonts.gstatic.com/ea/amiri/v7/Amiri-Regular.ttf');
+                doc.addFont('Amiri-Regular.ttf', 'Amiri', 'normal');
+                doc.setFont('Amiri');
                 
-                const details = [
+                // تنسيق النص العربي
+                doc.setR2L(true);
+                doc.setFontSize(16);
+
+                const arabicText = [
+                    'تأكيد الحجز - مهيلة ديوان الشموخ',
                     `رقم الحجز: ${document.getElementById("bookingNumber").innerText}`,
                     `نوع الجلسة: ${document.getElementById("confirmSessionType").innerText}`,
                     `اسم العميل: ${document.getElementById("confirmClientName").innerText}`,
@@ -275,25 +283,24 @@
                     `المدفوع: ${document.getElementById("confirmPaid").innerText} ريال`,
                     `المتبقي: ${document.getElementById("confirmRemaining").innerText} ريال`
                 ];
-                
-                details.forEach((text, index) => {
-                    doc.text(text, 15, 40 + (index * 10));
+
+                // كتابة المحتوى
+                arabicText.forEach((text, index) => {
+                    doc.text(text, 190, 20 + (index * 10), { align: 'right' });
                 });
 
+                // حفظ وإرسال
                 const pdfBlob = doc.output('blob');
-                const pdfUrl = URL.createObjectURL(pdfBlob);
                 const phone = document.getElementById("confirmPhone").innerText.replace(/^0/, '966');
+                const pdfUrl = URL.createObjectURL(pdfBlob);
+                
+                window.open(`https://wa.me/${phone}?text=مرحباً، تم إعداد تفاصيل حجزك بنجاح`, '_blank');
                 
                 // تحميل الملف تلقائيًا
                 const link = document.createElement('a');
                 link.href = pdfUrl;
                 link.download = `حجز_${document.getElementById("bookingNumber").innerText}.pdf`;
                 link.click();
-                
-                // فتح واتساب بعد ثانية واحدة
-                setTimeout(() => {
-                    window.open(`https://wa.me/${phone}?text=مرحباً، تم إعداد تفاصيل حجزك بنجاح. يرجى التحقق من الملف المرفق`, '_blank');
-                }, 1000);
 
             } catch (error) {
                 alert('حدث خطأ أثناء إنشاء الملف، يرجى المحاولة مرة أخرى');
