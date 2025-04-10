@@ -5,21 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>نظام حجز جلسات - مهيلة ديوان الشموخ</title>
   <style>
+    /* خلفية الصفحة مع صورة من الإنترنت */
     body {
       font-family: "Tajawal", sans-serif;
       direction: rtl;
-      background: #f4f6f8;
+      background: url('https://source.unsplash.com/1600x900/?pattern') no-repeat center center fixed;
+      background-size: cover;
       margin: 0;
       padding: 20px;
       color: #333;
     }
+    /* ترويسة مع خلفية مختلفة لإبراز العنوان */
+    .header {
+      background: url('https://source.unsplash.com/1600x400/?abstract') no-repeat center center;
+      background-size: cover;
+      padding: 30px;
+      text-align: center;
+      border-radius: 12px 12px 0 0;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    /* حاوية المحتوى مع خلفية شفافة لتباين أوضح عن الخلفية */
     .container {
       max-width: 650px;
       margin: 0 auto;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.95);
       padding: 25px;
       border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(0,0,0,0.15);
     }
     h1, h2 {
       text-align: center;
@@ -77,10 +90,13 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <!-- ترويسة مع عنوان مع خلفية -->
+  <div class="header">
     <h1>مهيلة ديوان الشموخ</h1>
     <h2>نظام حجز الجلسات</h2>
+  </div>
 
+  <div class="container">
     <form id="bookingForm">
       <label for="sessionType">نوع الجلسة</label>
       <select id="sessionType" required>
@@ -167,7 +183,7 @@
       document.getElementById("confirmation").style.display = "block";
 
       // إرسال البيانات عبر WhatsApp
-      const phoneClean = phone.replace(/^0/, "966"); // استبدال 0 بـ 966
+      const phoneClean = phone.replace(/^0/, "966");
       const message = `مرحباً ${clientName}%0Aتم تأكيد حجزك في مهيلة ديوان الشموخ:%0A%0Aرقم الحجز: ${bookingNumber}%0Aنوع الجلسة: ${sessionType}%0Aالتاريخ: ${bookingDate}%0Aالوقت: ${bookingTime}%0Aالسعر: ${price} ريال%0Aالمدفوع: ${paid} ريال%0Aالمتبقي: ${remaining} ريال%0A%0Aشكراً لاختياركم لنا.`;
       const whatsappURL = `https://wa.me/${phoneClean}?text=${message}`;
       window.open(whatsappURL, '_blank');
