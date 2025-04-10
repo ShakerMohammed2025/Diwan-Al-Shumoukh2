@@ -6,37 +6,57 @@
   <title>نظام حجز جلسات - مهيلة ديوان الشموخ</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* تحسينات التصميم الأساسية */
+    /* تأثيرات إضافية */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
     body {
       font-family: "Tajawal", sans-serif;
       direction: rtl;
-      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      background: url('https://source.unsplash.com/1600x900/?pattern') no-repeat center center fixed;
+      background-size: cover;
       margin: 0;
       padding: 20px;
       color: #333;
-      min-height: 100vh;
     }
 
     .header {
-      background: linear-gradient(45deg, #2c786c, #235347);
-      padding: 2rem;
+      background: url('https://source.unsplash.com/1600x400/?abstract') no-repeat center center;
+      background-size: cover;
+      padding: 30px;
       text-align: center;
-      border-radius: 15px;
+      border-radius: 12px 12px 0 0;
       color: #fff;
-      margin: 20px auto;
-      max-width: 650px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      animation: slideIn 0.8s ease;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(0,0,0,0.3), rgba(0,0,0,0.1));
     }
 
     .container {
       max-width: 650px;
       margin: 0 auto;
-      background: rgba(255, 255, 255, 0.98);
-      padding: 2rem;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.95);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.15);
       transform: translateY(0);
       transition: all 0.3s ease;
     }
@@ -47,32 +67,44 @@
 
     h1, h2 {
       text-align: center;
-      color: #2c786c;
-      margin: 1rem 0;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+      color: #2c3e50;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
     }
 
     label {
       display: block;
-      margin: 1rem 0 0.5rem;
-      font-weight: 600;
-      color: #2c786c;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    .input-group i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
     }
 
     input, select {
       width: 100%;
-      padding: 12px 15px;
-      margin-bottom: 1rem;
+      padding: 12px 40px 12px 15px;
+      margin-bottom: 10px;
       border: 2px solid #ddd;
-      border-radius: 8px;
-      font-size: 1rem;
+      border-radius: 6px;
+      font-size: 15px;
       transition: all 0.3s ease;
     }
 
     input:focus, select:focus {
-      border-color: #2c786c;
-      box-shadow: 0 0 10px rgba(44, 120, 108, 0.2);
-      outline: none;
+      border-color: #27ae60;
+      box-shadow: 0 0 10px rgba(39, 174, 96, 0.2);
     }
 
     .btn {
@@ -81,78 +113,66 @@
       justify-content: center;
       gap: 10px;
       width: 100%;
-      padding: 1rem;
-      margin-top: 1.5rem;
-      background: linear-gradient(45deg, #2c786c, #235347);
+      padding: 14px;
+      margin-top: 20px;
+      background: linear-gradient(45deg, #27ae60, #1e8449);
       color: #fff;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
-      font-size: 1.1rem;
-      font-weight: 600;
+      font-size: 17px;
+      font-weight: bold;
       transition: all 0.3s ease;
     }
 
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(44, 120, 108, 0.3);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
     }
 
     .confirmation {
       display: none;
-      margin-top: 2rem;
-      background: #e3f2fd;
-      padding: 2rem;
-      border-radius: 15px;
-      border-left: 5px solid #2c786c;
+      margin-top: 30px;
+      background-color: #eafaf1;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #c4e3d5;
       animation: fadeIn 0.5s ease;
     }
 
     .notes {
       font-size: 0.95em;
-      margin-top: 1.5rem;
+      margin-top: 15px;
       background: #f0f8ff;
-      padding: 1rem;
+      padding: 12px;
       border-left: 4px solid #3498db;
-      border-radius: 8px;
-    }
-
-    /* تأثيرات الحركة */
-    @keyframes slideIn {
-      from { transform: translateY(-50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    /* أيقونات Font Awesome */
-    .input-icon {
       position: relative;
     }
 
-    .input-icon i {
+    .notes::before {
+      content: "\f05a";
+      font-family: "Font Awesome 5 Free";
       position: absolute;
-      left: 15px;
+      left: 10px;
       top: 50%;
       transform: translateY(-50%);
-      color: #666;
+      color: #3498db;
     }
 
-    /* تحسينات للجوال */
-    @media (max-width: 768px) {
-      .container {
-        padding: 1.5rem;
-        margin: 0 15px;
-        width: calc(100% - 30px);
-      }
-      
-      .header {
-        padding: 1.5rem;
-        margin: 15px auto;
-      }
+    /* تأثيرات التحقق */
+    .invalid {
+      animation: shake 0.4s ease;
+      border-color: #e74c3c !important;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
     }
   </style>
 </head>
@@ -164,43 +184,43 @@
 
   <div class="container">
     <form id="bookingForm">
-      <div class="input-icon">
+      <div class="input-group">
         <i class="fas fa-couch"></i>
         <select id="sessionType" required>
-          <option value="جلسة صغير">جلسة صغير (200 ريال)</option>
-          <option value="جلسة كبيرة">جلسة كبيرة (350 ريال)</option>
-          <option value="VIP">جلسة VIP (500 ريال)</option>
+          <option value="جلسة صغير">جلسة صغير</option>
+          <option value="جلسة كبيرة">جلسة كبيرة</option>
+          <option value="VIP">VIP</option>
         </select>
       </div>
 
-      <div class="input-icon">
+      <div class="input-group">
         <i class="fas fa-user"></i>
-        <input type="text" id="clientName" placeholder="اسم العميل" required>
+        <input type="text" id="clientName" placeholder="أدخل اسم العميل" required>
       </div>
 
-      <div class="input-icon">
+      <div class="input-group">
         <i class="fas fa-phone"></i>
-        <input type="tel" id="phone" placeholder="رقم الهاتف (مثال: 0551234567)" pattern="05\d{8}" required>
+        <input type="tel" id="phone" placeholder="أدخل رقم الهاتف" pattern="05\d{8}" required>
       </div>
 
-      <div class="input-icon">
+      <div class="input-group">
         <i class="fas fa-calendar-day"></i>
         <input type="date" id="bookingDate" required>
       </div>
 
-      <div class="input-icon">
+      <div class="input-group">
         <i class="fas fa-clock"></i>
         <input type="time" id="bookingTime" required>
       </div>
 
-      <div class="input-icon">
+      <div class="input-group">
         <i class="fas fa-tag"></i>
-        <input type="number" id="price" placeholder="السعر (ريال)" required>
+        <input type="number" id="price" placeholder="أدخل السعر" required>
       </div>
 
-      <div class="input-icon">
+      <div class="input-group">
         <i class="fas fa-money-bill-wave"></i>
-        <input type="number" id="paid" placeholder="المبلغ المدفوع (ريال)" required>
+        <input type="number" id="paid" placeholder="أدخل المبلغ المدفوع" required>
       </div>
 
       <button type="submit" class="btn">
@@ -210,56 +230,41 @@
     </form>
 
     <div class="confirmation" id="confirmation">
-      <!-- ... نفس محتوى التأكيد مع إضافة الأيقونات ... -->
+      <!-- ... (نفس محتوى التأكيد مع إضافة الأيقونات) ... -->
     </div>
   </div>
 
   <script>
     // تحسينات JavaScript
-    document.getElementById('sessionType').addEventListener('change', function() {
-      const prices = {
-        'جلسة صغير': 200,
-        'جلسة كبيرة': 350,
-        'VIP': 500
-      };
-      document.getElementById('price').value = prices[this.value];
-    });
-
-    // التحقق من رقم الهاتف
-    document.getElementById('phone').addEventListener('input', function(e) {
-      this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
-    });
-
-    // منع التواريخ السابقة
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('bookingDate').min = today;
-
-    // إضافة تأثيرات عند الإرسال
-    document.getElementById("bookingForm").addEventListener("submit", function(event) {
-      event.preventDefault();
+    document.getElementById("bookingForm").addEventListener("submit", function(e) {
+      e.preventDefault();
       
-      // تأثير اهتزاز عند وجود أخطاء
       if (!this.checkValidity()) {
-        this.classList.add('invalid-form');
-        setTimeout(() => this.classList.remove('invalid-form'), 500);
+        this.classList.add('invalid');
+        setTimeout(() => this.classList.remove('invalid'), 500);
         return;
       }
 
-      // ... بقية كود الإرسال ...
+      // ... (الكود الأصلي) ...
     });
 
-    // إضافة تأثيرات CSS للخطأ
-    style.innerHTML += `
-      @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        25% { transform: translateX(5px); }
-        75% { transform: translateX(-5px); }
-      }
-      .invalid-form {
-        animation: shake 0.3s ease;
-        border-color: #ff4444 !important;
-      }
-    `;
+    // إضافة التحقق الديناميكي
+    document.querySelectorAll('input, select').forEach(el => {
+      el.addEventListener('input', () => {
+        el.classList.remove('invalid');
+      });
+    });
+
+    // تحديد تاريخ اليوم كحد أدنى
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('bookingDate').min = today;
+
+    // تحسين إرسال الواتساب
+    function sendWhatsApp(message) {
+      const phone = document.getElementById('phone').value.replace(/^0/, '966');
+      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
   </script>
 </body>
 </html>
