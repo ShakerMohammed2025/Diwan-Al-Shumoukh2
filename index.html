@@ -1,202 +1,221 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>نظام حجز جلسات - ديوان الشموخ</title>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Tajawal', sans-serif;
-      direction: rtl;
-      margin: 0;
-      background: url('https://images.unsplash.com/photo-1585257306730-ef2641e4a7f0') no-repeat center center fixed;
-      background-size: cover;
-      color: #333;
-    }
+<!DOCTYPE html>  <html lang="ar">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1">  
+  <title>نظام حجز الجلسات - مهيلة ديوان الشموخ</title>  
+  <style>  
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');  body {  
+  font-family: 'Tajawal', sans-serif;  
+  direction: rtl;  
+  margin: 0;  
+  padding: 0;  
+  overflow: hidden;  
+  color: #fff;  
+}  
 
-    .overlay {
-      background-color: rgba(255, 255, 255, 0.92);
-      min-height: 100vh;
-      padding: 30px 20px;
-    }
+/* خلفية الفيديو */  
+#video-background {  
+  position: fixed;  
+  top: 0;  
+  left: 0;  
+  width: 100vw;  
+  height: 100vh;  
+  object-fit: cover;  
+  z-index: -1;  
+}  
 
-    .container {
-      max-width: 700px;
-      margin: auto;
-      background: #ffffffee;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    }
+/* تراكب شفاف فوق الفيديو */  
+#overlay {  
+  position: fixed;  
+  top: 0;  
+  left: 0;  
+  width: 100vw;  
+  height: 100vh;  
+  background: rgba(0, 0, 0, 0.5);  
+  z-index: 0;  
+}  
 
-    .logo {
-      display: block;
-      margin: 0 auto 20px;
-      width: 120px;
-    }
+/* الحاوية الرئيسية */  
+.container {  
+  position: relative;  
+  z-index: 1;  
+  max-width: 600px;  
+  margin: 5vh auto;  
+  background: rgba(0, 0, 0, 0.7);  
+  padding: 20px;  
+  border-radius: 12px;  
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);  
+  opacity: 0;  
+  transform: translateY(20px);  
+  animation: fadeInUp 1s forwards;  
+}  
 
-    h1, h2 {
-      text-align: center;
-      color: #2c3e50;
-      margin-bottom: 10px;
-    }
+h1, h2 {  
+  text-align: center;  
+  color: #f1c40f;  
+}  
 
-    label {
-      display: block;
-      margin: 15px 0 5px;
-      font-weight: bold;
-    }
+label {  
+  display: block;  
+  margin: 15px 0 5px;  
+  font-weight: bold;  
+}  
 
-    input, select {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 15px;
-      background: #f9f9f9;
-    }
+select, input {  
+  width: 100%;  
+  padding: 10px;  
+  margin-bottom: 10px;  
+  border: 1px solid #555;  
+  border-radius: 6px;  
+  font-size: 15px;  
+  background: #333;  
+  color: #fff;  
+}  
 
-    .btn {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(45deg, #27ae60, #2ecc71);
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s ease;
-    }
+.btn {  
+  display: block;  
+  width: 100%;  
+  padding: 14px;  
+  margin-top: 20px;  
+  background-color: #27ae60;  
+  color: #fff;  
+  border: none;  
+  border-radius: 6px;  
+  cursor: pointer;  
+  font-size: 17px;  
+  font-weight: bold;  
+  transition: background-color 0.3s;  
+}  
 
-    .btn:hover {
-      background: linear-gradient(45deg, #219150, #28b766);
-    }
+.btn:hover {  
+  background-color: #1e8449;  
+}  
 
-    .confirmation {
-      display: none;
-      margin-top: 30px;
-      background-color: #eafaf1;
-      padding: 20px;
-      border-radius: 12px;
-      border: 1px solid #c4e3d5;
-    }
+/* زر تشغيل الموسيقى */  
+#music-control {  
+  position: fixed;  
+  top: 20px;  
+  left: 20px;  
+  background: rgba(0, 0, 0, 0.5);  
+  border: none;  
+  color: #fff;  
+  padding: 10px 15px;  
+  border-radius: 50%;  
+  cursor: pointer;  
+  font-size: 18px;  
+  z-index: 2;  
+}  
 
-    .confirmation p {
-      margin: 8px 0;
-      line-height: 1.6;
-    }
+/* تأثيرات الدخول */  
+@keyframes fadeInUp {  
+  from {  
+    opacity: 0;  
+    transform: translateY(20px);  
+  }  
+  to {  
+    opacity: 1;  
+    transform: translateY(0);  
+  }  
+}
 
-    .notes {
-      background: #eef6ff;
-      padding: 12px;
-      margin-top: 15px;
-      border-left: 5px solid #3498db;
-      font-size: 0.95em;
-    }
-  </style>
-</head>
-<body>
-  <div class="overlay">
-    <div class="container">
-      <img src="https://i.imgur.com/LDYJlzc.png" alt="شعار ديوان الشموخ" class="logo" />
-      <h1>مهيلة ديوان الشموخ</h1>
-      <h2>نظام حجز الجلسات</h2>
+  </style>  
+</head>  
+<body>    <!-- خلفية الفيديو -->    <video id="video-background" autoplay muted loop>  
+    <source src="background-video.mp4" type="video/mp4">  
+    <!-- أضف تنسيقات فيديو إضافية إذا لزم الأمر -->  
+    متصفحك لا يدعم تشغيل الفيديو.  
+  </video>    <!-- تراكب شفاف فوق الفيديو -->    <div id="overlay"></div>    <!-- زر تشغيل الموسيقى -->  <button id="music-control">♫</button>
+<audio id="background-music" loop>
+<source src="background-music.mp3" type="audio/mpeg">
+<!-- أضف تنسيقات صوت إضافية إذا لزم الأمر -->
+متصفحك لا يدعم تشغيل الصوت.
+</audio>
 
-      <form id="bookingForm">
-        <label for="sessionType">نوع الجلسة</label>
-        <select id="sessionType" required>
-          <option value="جلسة صغير">جلسة صغير</option>
-          <option value="جلسة كبيرة">جلسة كبيرة</option>
-          <option value="VIP">VIP</option>
-        </select>
+  <!-- الحاوية الرئيسية -->    <div class="container">  
+    <h1>مهيلة ديوان الشموخ</h1>  
+    <h2>نظام حجز الجلسات</h2>  <form id="bookingForm">  
+  <label for="sessionType">نوع الجلسة</label>  
+  <select id="sessionType" required>  
+    <option value="">اختر نوع الجلسة</option>  
+    <option value="small">جلسة صغيرة</option>  
+    <option value="large">جلسة كبيرة</option>  
+    <option value="vip">VIP</option>  
+  </select>  
 
-        <label for="clientName">اسم العميل</label>
-        <input type="text" id="clientName" placeholder="أدخل اسم العميل" required />
+  <label for="sessionNumber">رقم الجلسة</label>  
+  <select id="sessionNumber" required>  
+    <option value="">اختر رقم الجلسة</option>  
+    <!-- سيتم تعبئة الخيارات ديناميكيًا -->  
+  </select>  
 
-        <label for="phone">رقم الهاتف (مثال: 0551234567)</label>
-        <input type="tel" id="phone" placeholder="أدخل رقم الهاتف" required />
+  <label for="clientName">اسم العميل</label>  
+  <input type="text" id="clientName" placeholder="أدخل اسم العميل" required>  
 
-        <label for="bookingDate">تاريخ الحجز</label>
-        <input type="date" id="bookingDate" required />
+  <label for="phone">رقم الهاتف</label>  
+  <input type="tel" id="phone" placeholder="أدخل رقم الهاتف" required>  
 
-        <label for="bookingTime">وقت الحجز</label>
-        <input type="time" id="bookingTime" required />
+  <label for="bookingDate">تاريخ الحجز</label>  
+  <input type="date" id="bookingDate" required>  
 
-        <label for="price">السعر (ريال)</label>
-        <input type="number" id="price" placeholder="أدخل السعر" required />
+  <label for="bookingTime">وقت الحجز</label>  
+  <input type="time" id="bookingTime" required>  
 
-        <label for="paid">المبلغ المدفوع (ريال)</label>
-        <input type="number" id="paid" placeholder="أدخل المبلغ المدفوع" required />
+  <label for="price">السعر (ريال)</label>  
+  <input type="number" id="price" placeholder="أدخل السعر" required>  
 
-        <button type="submit" class="btn">تأكيد الحجز</button>
-      </form>
+  <label for="paid">المبلغ المدفوع (ريال)</label>  
+  <input type="number" id="paid" placeholder="أدخل المبلغ المدفوع" required>  
 
-      <div class="confirmation" id="confirmation">
-        <h2>تم تأكيد الحجز</h2>
-        <p><strong>رقم الحجز:</strong> <span id="bookingNumber"></span></p>
-        <p><strong>نوع الجلسة:</strong> <span id="confirmSessionType"></span></p>
-        <p><strong>اسم العميل:</strong> <span id="confirmClientName"></span></p>
-        <p><strong>رقم الهاتف:</strong> <span id="confirmPhone"></span></p>
-        <p><strong>تاريخ الحجز:</strong> <span id="confirmBookingDate"></span></p>
-        <p><strong>وقت الحجز:</strong> <span id="confirmBookingTime"></span></p>
-        <p><strong>السعر:</strong> <span id="confirmPrice"></span> ريال</p>
-        <p><strong>المدفوع:</strong> <span id="confirmPaid"></span> ريال</p>
-        <p><strong>المتبقي:</strong> <span id="confirmRemaining"></span> ريال</p>
+  <button type="submit" class="btn">تأكيد الحجز</button>  
+</form>
 
-        <div class="notes">
-          <p><strong>ملاحظة:</strong> السعر يشمل القهوة والشاي.</p>
-          <p><strong>يرجى الإبلاغ قبل 3 ساعات في حال الإلغاء أو التعديل.</strong></p>
-          <p><strong>للاستفسار:</strong> 0532989930</p>
-          <p><strong>الدفع:</strong> نقداً أو عبر البطاقة.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    function generateBookingNumber() {
-      return Math.floor(100000 + Math.random() * 900000);
-    }
-
-    function calculateRemaining(price, paid) {
-      return price - paid;
-    }
-
-    document.getElementById("bookingForm").addEventListener("submit", function (event) {
-      event.preventDefault();
-
-      const sessionType = document.getElementById("sessionType").value;
-      const clientName = document.getElementById("clientName").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const bookingDate = document.getElementById("bookingDate").value;
-      const bookingTime = document.getElementById("bookingTime").value;
-      const price = parseFloat(document.getElementById("price").value);
-      const paid = parseFloat(document.getElementById("paid").value);
-      const remaining = calculateRemaining(price, paid);
-      const bookingNumber = generateBookingNumber();
-
-      document.getElementById("bookingNumber").innerText = bookingNumber;
-      document.getElementById("confirmSessionType").innerText = sessionType;
-      document.getElementById("confirmClientName").innerText = clientName;
-      document.getElementById("confirmPhone").innerText = phone;
-      document.getElementById("confirmBookingDate").innerText = bookingDate;
-      document.getElementById("confirmBookingTime").innerText = bookingTime;
-      document.getElementById("confirmPrice").innerText = price.toFixed(2);
-      document.getElementById("confirmPaid").innerText = paid.toFixed(2);
-      document.getElementById("confirmRemaining").innerText = remaining.toFixed(2);
-
-      document.getElementById("bookingForm").style.display = "none";
-      document.getElementById("confirmation").style.display = "block";
-
-      // إرسال عبر واتساب
-      const phoneClean = phone.replace(/^0/, "966");
-      const message = `مرحباً ${clientName}%0Aتم تأكيد حجزك في مهيلة ديوان الشموخ:%0Aرقم الحجز: ${bookingNumber}%0Aنوع الجلسة: ${sessionType}%0Aالتاريخ: ${bookingDate}%0Aالوقت: ${bookingTime}%0Aالسعر: ${price} ريال%0Aالمدفوع: ${paid} ريال%0Aالمتبقي: ${remaining} ريال%0Aشكراً لاختياركم لنا.`;
-      const whatsappURL = `https://wa.me/${phoneClean}?text=${message}`;
-      window.open(whatsappURL, '_blank');
-    });
+  </div>    <script>  
+    document.addEventListener('DOMContentLoaded', function() {  
+      const sessionType = document.getElementById('sessionType');  
+      const sessionNumber = document.getElementById('session4  
+<script>  
+  const sessionType = document.getElementById('sessionType');  
+  const sessionNumber = document.getElementById('sessionNumber');  
+  const musicControl = document.getElementById('music-control');  
+  const music = document.getElementById('background-music');  
+  
+  // تشغيل/إيقاف الموسيقى  
+  let isPlaying = false;  
+  musicControl.addEventListener('click', () => {  
+    if (!isPlaying) {  
+      music.play();  
+      isPlaying = true;  
+      musicControl.textContent = '■'; // رمز إيقاف  
+    } else {  
+      music.pause();  
+      isPlaying = false;  
+      musicControl.textContent = '♫'; // رمز تشغيل  
+    }  
+  });  
+  
+  // تحديد أرقام الجلسات حسب النوع  
+  const sessions = {  
+    small: ['1', '2', '3', '4', '5', '6', '16', '17', '18'],  
+    large: ['7', '8', '9', '10', '11', '12', '13', '14', '15'],  
+    vip: ['VIP 1']  
+  };  
+  
+  sessionType.addEventListener('change', () => {  
+    const type = sessionType.value;  
+    sessionNumber.innerHTML = '<option value="">اختر رقم الجلسة</option>';  
+    if (sessions[type]) {  
+      sessions[type].forEach(num => {  
+        const option = document.createElement('option');  
+        option.value = num;  
+        option.textContent = num;  
+        sessionNumber.appendChild(option);  
+      });  
+    }  
+  });  
+  
+  // معالجة الحجز (مثال فقط)  
+  document.getElementById('bookingForm').addEventListener('submit', function(e) {  
+    e.preventDefault();  
+    alert('تم تأكيد الحجز بنجاح!');  
+  });  
   </script>
-</body>
-  </html>
