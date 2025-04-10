@@ -1,148 +1,157 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>نظام حجز الجلسات - مهيلة ديوان الشموخ</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>نظام حجز جلسات - ديوان الشموخ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* خلفية الصفحة مع صورة من الإنترنت */
     body {
-      font-family: "Tajawal", sans-serif;
+      font-family: 'Tajawal', sans-serif;
       direction: rtl;
-      background: url('https://source.unsplash.com/1600x900/?pattern') no-repeat center center fixed;
-      background-size: cover;
       margin: 0;
-      padding: 20px;
+      background: url('https://images.unsplash.com/photo-1585257306730-ef2641e4a7f0') no-repeat center center fixed;
+      background-size: cover;
       color: #333;
     }
-    /* ترويسة مع خلفية مختلفة لإبراز العنوان */
-    .header {
-      background: url('https://source.unsplash.com/1600x400/?abstract') no-repeat center center;
-      background-size: cover;
-      padding: 30px;
-      text-align: center;
-      border-radius: 12px 12px 0 0;
-      color: #fff;
-      margin-bottom: 20px;
+
+    .overlay {
+      background-color: rgba(255, 255, 255, 0.92);
+      min-height: 100vh;
+      padding: 30px 20px;
     }
-    /* حاوية المحتوى مع خلفية شفافة لتباين أوضح عن الخلفية */
+
     .container {
-      max-width: 650px;
-      margin: 0 auto;
-      background: rgba(255, 255, 255, 0.95);
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.15);
+      max-width: 700px;
+      margin: auto;
+      background: #ffffffee;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
+
+    .logo {
+      display: block;
+      margin: 0 auto 20px;
+      width: 120px;
+    }
+
     h1, h2 {
       text-align: center;
       color: #2c3e50;
       margin-bottom: 10px;
     }
+
     label {
       display: block;
       margin: 15px 0 5px;
       font-weight: bold;
     }
+
     input, select {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin-bottom: 10px;
       border: 1px solid #ccc;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 15px;
+      background: #f9f9f9;
     }
+
     .btn {
-      display: block;
       width: 100%;
       padding: 14px;
-      margin-top: 20px;
-      background-color: #27ae60;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
+      background: linear-gradient(45deg, #27ae60, #2ecc71);
+      color: white;
       font-size: 17px;
       font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s ease;
     }
+
     .btn:hover {
-      background-color: #1e8449;
+      background: linear-gradient(45deg, #219150, #28b766);
     }
+
     .confirmation {
       display: none;
       margin-top: 30px;
       background-color: #eafaf1;
       padding: 20px;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid #c4e3d5;
     }
+
     .confirmation p {
       margin: 8px 0;
       line-height: 1.6;
     }
+
     .notes {
-      font-size: 0.95em;
-      margin-top: 15px;
-      background: #f0f8ff;
+      background: #eef6ff;
       padding: 12px;
-      border-left: 4px solid #3498db;
+      margin-top: 15px;
+      border-left: 5px solid #3498db;
+      font-size: 0.95em;
     }
   </style>
 </head>
 <body>
-  <!-- ترويسة مع عنوان مع خلفية -->
-  <div class="header">
-    <h1>مهيلة ديوان الشموخ</h1>
-    <h2>نظام حجز الجلسات</h2>
-  </div>
+  <div class="overlay">
+    <div class="container">
+      <img src="https://i.imgur.com/LDYJlzc.png" alt="شعار ديوان الشموخ" class="logo" />
+      <h1>مهيلة ديوان الشموخ</h1>
+      <h2>نظام حجز الجلسات</h2>
 
-  <div class="container">
-    <form id="bookingForm">
-      <label for="sessionType">نوع الجلسة</label>
-      <select id="sessionType" required>
-        <option value="جلسة صغير">جلسة صغير</option>
-        <option value="جلسة كبيرة">جلسة كبيرة</option>
-        <option value="VIP">VIP</option>
-      </select>
+      <form id="bookingForm">
+        <label for="sessionType">نوع الجلسة</label>
+        <select id="sessionType" required>
+          <option value="جلسة صغير">جلسة صغير</option>
+          <option value="جلسة كبيرة">جلسة كبيرة</option>
+          <option value="VIP">VIP</option>
+        </select>
 
-      <label for="clientName">اسم العميل</label>
-      <input type="text" id="clientName" placeholder="أدخل اسم العميل" required>
+        <label for="clientName">اسم العميل</label>
+        <input type="text" id="clientName" placeholder="أدخل اسم العميل" required />
 
-      <label for="phone">رقم الهاتف (مثال: 0551234567)</label>
-      <input type="tel" id="phone" placeholder="أدخل رقم الهاتف" required>
+        <label for="phone">رقم الهاتف (مثال: 0551234567)</label>
+        <input type="tel" id="phone" placeholder="أدخل رقم الهاتف" required />
 
-      <label for="bookingDate">تاريخ الحجز</label>
-      <input type="date" id="bookingDate" required>
+        <label for="bookingDate">تاريخ الحجز</label>
+        <input type="date" id="bookingDate" required />
 
-      <label for="bookingTime">وقت الحجز</label>
-      <input type="time" id="bookingTime" required>
+        <label for="bookingTime">وقت الحجز</label>
+        <input type="time" id="bookingTime" required />
 
-      <label for="price">السعر (ريال)</label>
-      <input type="number" id="price" placeholder="أدخل السعر" required>
+        <label for="price">السعر (ريال)</label>
+        <input type="number" id="price" placeholder="أدخل السعر" required />
 
-      <label for="paid">المبلغ المدفوع (ريال)</label>
-      <input type="number" id="paid" placeholder="أدخل المبلغ المدفوع" required>
+        <label for="paid">المبلغ المدفوع (ريال)</label>
+        <input type="number" id="paid" placeholder="أدخل المبلغ المدفوع" required />
 
-      <button type="submit" class="btn">تأكيد الحجز</button>
-    </form>
+        <button type="submit" class="btn">تأكيد الحجز</button>
+      </form>
 
-    <div class="confirmation" id="confirmation">
-      <h2>تم تأكيد الحجز</h2>
-      <p><strong>رقم الحجز:</strong> <span id="bookingNumber"></span></p>
-      <p><strong>نوع الجلسة:</strong> <span id="confirmSessionType"></span></p>
-      <p><strong>اسم العميل:</strong> <span id="confirmClientName"></span></p>
-      <p><strong>رقم الهاتف:</strong> <span id="confirmPhone"></span></p>
-      <p><strong>تاريخ الحجز:</strong> <span id="confirmBookingDate"></span></p>
-      <p><strong>وقت الحجز:</strong> <span id="confirmBookingTime"></span></p>
-      <p><strong>السعر:</strong> <span id="confirmPrice"></span> ريال</p>
-      <p><strong>المدفوع:</strong> <span id="confirmPaid"></span> ريال</p>
-      <p><strong>المتبقي:</strong> <span id="confirmRemaining"></span> ريال</p>
+      <div class="confirmation" id="confirmation">
+        <h2>تم تأكيد الحجز</h2>
+        <p><strong>رقم الحجز:</strong> <span id="bookingNumber"></span></p>
+        <p><strong>نوع الجلسة:</strong> <span id="confirmSessionType"></span></p>
+        <p><strong>اسم العميل:</strong> <span id="confirmClientName"></span></p>
+        <p><strong>رقم الهاتف:</strong> <span id="confirmPhone"></span></p>
+        <p><strong>تاريخ الحجز:</strong> <span id="confirmBookingDate"></span></p>
+        <p><strong>وقت الحجز:</strong> <span id="confirmBookingTime"></span></p>
+        <p><strong>السعر:</strong> <span id="confirmPrice"></span> ريال</p>
+        <p><strong>المدفوع:</strong> <span id="confirmPaid"></span> ريال</p>
+        <p><strong>المتبقي:</strong> <span id="confirmRemaining"></span> ريال</p>
 
-      <div class="notes">
-        <p><strong>ملاحظة:</strong> السعر يشمل القهوة والشاي.</p>
-        <p><strong>يرجى الإبلاغ قبل 3 ساعات في حال الإلغاء أو التعديل.</strong></p>
-        <p><strong>للاستفسار:</strong> 0532989930</p>
-        <p><strong>الدفع:</strong> نقداً أو عبر البطاقة.</p>
+        <div class="notes">
+          <p><strong>ملاحظة:</strong> السعر يشمل القهوة والشاي.</p>
+          <p><strong>يرجى الإبلاغ قبل 3 ساعات في حال الإلغاء أو التعديل.</strong></p>
+          <p><strong>للاستفسار:</strong> 0532989930</p>
+          <p><strong>الدفع:</strong> نقداً أو عبر البطاقة.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -156,7 +165,7 @@
       return price - paid;
     }
 
-    document.getElementById("bookingForm").addEventListener("submit", function(event) {
+    document.getElementById("bookingForm").addEventListener("submit", function (event) {
       event.preventDefault();
 
       const sessionType = document.getElementById("sessionType").value;
@@ -182,12 +191,12 @@
       document.getElementById("bookingForm").style.display = "none";
       document.getElementById("confirmation").style.display = "block";
 
-      // إرسال البيانات عبر WhatsApp
+      // إرسال عبر واتساب
       const phoneClean = phone.replace(/^0/, "966");
-      const message = `مرحباً ${clientName}%0Aتم تأكيد حجزك في مهيلة ديوان الشموخ:%0A%0Aرقم الحجز: ${bookingNumber}%0Aنوع الجلسة: ${sessionType}%0Aالتاريخ: ${bookingDate}%0Aالوقت: ${bookingTime}%0Aالسعر: ${price} ريال%0Aالمدفوع: ${paid} ريال%0Aالمتبقي: ${remaining} ريال%0A%0Aشكراً لاختياركم لنا.`;
+      const message = `مرحباً ${clientName}%0Aتم تأكيد حجزك في مهيلة ديوان الشموخ:%0Aرقم الحجز: ${bookingNumber}%0Aنوع الجلسة: ${sessionType}%0Aالتاريخ: ${bookingDate}%0Aالوقت: ${bookingTime}%0Aالسعر: ${price} ريال%0Aالمدفوع: ${paid} ريال%0Aالمتبقي: ${remaining} ريال%0Aشكراً لاختياركم لنا.`;
       const whatsappURL = `https://wa.me/${phoneClean}?text=${message}`;
       window.open(whatsappURL, '_blank');
     });
   </script>
 </body>
-</html>
+  </html>
