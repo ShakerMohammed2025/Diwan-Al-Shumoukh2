@@ -38,13 +38,6 @@
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
-        label {
-            display: block;
-            margin: 20px 0 10px;
-            font-weight: bold;
-            color: #2c3e50;
-        }
-
         input, select {
             width: 100%;
             padding: 12px 15px;
@@ -286,11 +279,22 @@
                 details.forEach((text, index) => {
                     doc.text(text, 15, 40 + (index * 10));
                 });
-                
-                const pdfOutput = doc.output('datauristring');
+
+                const pdfBlob = doc.output('blob');
+                const pdfUrl = URL.createObjectURL(pdfBlob);
                 const phone = document.getElementById("confirmPhone").innerText.replace(/^0/, '966');
-                window.open(`https://wa.me/${phone}?text=مرحباً، تفاصيل حجزك جاهزة للتحميل: ${encodeURIComponent(pdfOutput)}`, '_blank');
                 
+                // تحميل الملف تلقائيًا
+                const link = document.createElement('a');
+                link.href = pdfUrl;
+                link.download = `حجز_${document.getElementById("bookingNumber").innerText}.pdf`;
+                link.click();
+                
+                // فتح واتساب بعد ثانية واحدة
+                setTimeout(() => {
+                    window.open(`https://wa.me/${phone}?text=مرحباً، تم إعداد تفاصيل حجزك بنجاح. يرجى التحقق من الملف المرفق`, '_blank');
+                }, 1000);
+
             } catch (error) {
                 alert('حدث خطأ أثناء إنشاء الملف، يرجى المحاولة مرة أخرى');
             }
