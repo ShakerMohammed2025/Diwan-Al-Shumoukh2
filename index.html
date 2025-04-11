@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نظام حجز جلسات - مهيلة ديوان الشموخ</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -18,7 +19,6 @@
 
         body {
             font-family: 'Tajawal', sans-serif;
-            direction: rtl;
             margin: 0;
             min-height: 100vh;
             background: var(--background),
@@ -61,7 +61,7 @@
 
         .form-group i {
             position: absolute;
-            left: 15px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
             color: #666;
@@ -74,11 +74,12 @@
             border-radius: 10px;
             font-size: 1rem;
             transition: all 0.3s ease;
+            text-align: right;
         }
 
-        .form-input:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 15px rgba(44, 120, 108, 0.2);
+        select.form-input {
+            appearance: none;
+            -webkit-appearance: none;
         }
 
         .btn {
@@ -90,6 +91,7 @@
             cursor: pointer;
             font-size: 1.1rem;
             transition: all 0.3s ease;
+            width: 100%;
         }
 
         .btn:hover {
@@ -106,6 +108,20 @@
             animation: fadeIn 0.5s ease;
         }
 
+        .booking-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -115,6 +131,10 @@
             .main-container {
                 margin: 1rem;
                 padding: 1rem;
+            }
+            
+            .booking-details {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -133,14 +153,6 @@
             </div>
 
             <div class="form-group">
-                <i class="fas fa-couch"></i>
-                <select id="sessionType" class="form-input" required>
-                    <option value="جلسة صغير">جلسة صغير</option>
-                    <option value="جلسة كبيرة">جلسة كبيرة</option>
-                </select>
-            </div>
-
-            <div class="form-group">
                 <i class="fas fa-user"></i>
                 <input type="text" id="clientName" class="form-input" placeholder="اسم العميل" required>
             </div>
@@ -148,6 +160,19 @@
             <div class="form-group">
                 <i class="fas fa-phone"></i>
                 <input type="tel" id="phone" class="form-input" placeholder="رقم الهاتف" required>
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-couch"></i>
+                <select id="sessionType" class="form-input" required>
+                    <option value="جلسة صغيرة">جلسة صغيرة</option>
+                    <option value="جلسة كبيرة">جلسة كبيرة</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" id="address" class="form-input" placeholder="العنوان" required>
             </div>
 
             <div class="form-group">
@@ -170,6 +195,11 @@
                 <input type="number" id="paid" class="form-input" placeholder="المبلغ المدفوع (ريال)" required>
             </div>
 
+            <div class="form-group">
+                <i class="fas fa-comments"></i>
+                <textarea id="notes" class="form-input" placeholder="ملاحظات إضافية" rows="3"></textarea>
+            </div>
+
             <button type="submit" class="btn">
                 <i class="fas fa-check-circle"></i>
                 تأكيد الحجز
@@ -179,31 +209,61 @@
         <section class="confirmation-section" id="confirmation">
             <h2>تفاصيل الحجز</h2>
             <div class="booking-details">
-                <p><strong>رقم الجلسة:</strong> <span id="confirmSessionId"></span></p>
-                <p><strong>نوع الجلسة:</strong> <span id="confirmSessionType"></span></p>
-                <p><strong>اسم العميل:</strong> <span id="confirmClientName"></span></p>
-                <p><strong>رقم الهاتف:</strong> <span id="confirmPhone"></span></p>
-                <p><strong>تاريخ الحجز:</strong> <span id="confirmBookingDate"></span></p>
-                <p><strong>وقت الحجز:</strong> <span id="confirmBookingTime"></span></p>
-                <p><strong>السعر:</strong> <span id="confirmPrice"></span> ريال</p>
-                <p><strong>المدفوع:</strong> <span id="confirmPaid"></span> ريال</p>
-                <p><strong>المتبقي:</strong> <span id="confirmRemaining"></span> ريال</p>
+                <div class="detail-item">
+                    <span>رقم الجلسة:</span>
+                    <span id="confirmSessionId"></span>
+                </div>
+                <div class="detail-item">
+                    <span>اسم العميل:</span>
+                    <span id="confirmClientName"></span>
+                </div>
+                <div class="detail-item">
+                    <span>رقم الهاتف:</span>
+                    <span id="confirmPhone"></span>
+                </div>
+                <div class="detail-item">
+                    <span>نوع الجلسة:</span>
+                    <span id="confirmSessionType"></span>
+                </div>
+                <div class="detail-item">
+                    <span>العنوان:</span>
+                    <span id="confirmAddress"></span>
+                </div>
+                <div class="detail-item">
+                    <span>تاريخ الحجز:</span>
+                    <span id="confirmBookingDate"></span>
+                </div>
+                <div class="detail-item">
+                    <span>وقت الحجز:</span>
+                    <span id="confirmBookingTime"></span>
+                </div>
+                <div class="detail-item">
+                    <span>السعر الكلي:</span>
+                    <span id="confirmPrice"></span> ريال
+                </div>
+                <div class="detail-item">
+                    <span>المبلغ المدفوع:</span>
+                    <span id="confirmPaid"></span> ريال
+                </div>
+                <div class="detail-item">
+                    <span>المتبقي:</span>
+                    <span id="confirmRemaining"></span> ريال
+                </div>
+                <div class="detail-item">
+                    <span>ملاحظات:</span>
+                    <span id="confirmNotes"></span>
+                </div>
             </div>
             
             <button class="btn pdf-btn" onclick="generatePDF()">
                 <i class="fas fa-file-pdf"></i>
                 تحميل PDF
             </button>
-            
-            <a href="admin.html" class="btn" style="margin-top: 1rem;">
-                <i class="fas fa-cog"></i>
-                لوحة التحكم
-            </a>
         </section>
     </div>
 
     <script>
-        // Firebase configuration
+        // تهيئة Firebase
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_AUTH_DOMAIN",
@@ -214,102 +274,87 @@
             appId: "YOUR_APP_ID"
         };
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Generate unique session ID
+        // توليد رقم جلسة
         function generateSessionId() {
             return `SID-${Date.now().toString(36).toUpperCase()}`;
         }
-
-        // Initialize form
         document.getElementById('sessionId').value = generateSessionId();
 
-        // Form submission handler
+        // إدارة الحجز
         document.getElementById('bookingForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const bookingData = {
                 sessionId: document.getElementById('sessionId').value,
-                sessionType: document.getElementById('sessionType').value,
                 clientName: document.getElementById('clientName').value.trim(),
                 phone: document.getElementById('phone').value.trim(),
+                sessionType: document.getElementById('sessionType').value,
+                address: document.getElementById('address').value.trim(),
                 bookingDate: document.getElementById('bookingDate').value,
                 bookingTime: document.getElementById('bookingTime').value,
                 price: parseFloat(document.getElementById('price').value),
                 paid: parseFloat(document.getElementById('paid').value),
+                notes: document.getElementById('notes').value.trim(),
                 timestamp: firebase.database.ServerValue.TIMESTAMP
             };
 
             try {
-                // Save to Firebase
                 await database.ref('bookings/' + bookingData.sessionId).set(bookingData);
-                
-                // Show confirmation
                 showConfirmation(bookingData);
             } catch (error) {
-                showError('حدث خطأ في حفظ البيانات');
+                alert('حدث خطأ في حفظ البيانات!');
             }
         });
 
-        // Show confirmation details
+        // عرض التفاصيل
         function showConfirmation(data) {
             document.getElementById('confirmSessionId').textContent = data.sessionId;
-            document.getElementById('confirmSessionType').textContent = data.sessionType;
             document.getElementById('confirmClientName').textContent = data.clientName;
             document.getElementById('confirmPhone').textContent = data.phone;
+            document.getElementById('confirmSessionType').textContent = data.sessionType;
+            document.getElementById('confirmAddress').textContent = data.address;
             document.getElementById('confirmBookingDate').textContent = data.bookingDate;
             document.getElementById('confirmBookingTime').textContent = data.bookingTime;
-            document.getElementById('confirmPrice').textContent = data.price.toFixed(2);
-            document.getElementById('confirmPaid').textContent = data.paid.toFixed(2);
-            document.getElementById('confirmRemaining').textContent = (data.price - data.paid).toFixed(2);
-
-            document.getElementById('bookingForm').style.display = 'none';
+            document.getElementById('confirmPrice').textContent = data.price;
+            document.getElementById('confirmPaid').textContent = data.paid;
+            document.getElementById('confirmRemaining').textContent = data.price - data.paid;
+            document.getElementById('confirmNotes').textContent = data.notes || "لا يوجد ملاحظات";
             document.getElementById('confirmation').style.display = 'block';
         }
 
-        // Generate PDF
-        async function generatePDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            
+        // إنشاء PDF
+        function generatePDF() {
+            const doc = new jspdf.jsPDF();
             doc.setFontSize(18);
-            doc.text('تأكيد الحجز - مهيلة ديوان الشموخ', 15, 20);
+            doc.text("إشعار حجز - مهيلة ديوان الشموخ", 105, 20, { align: 'center' });
+            
+            doc.setFontSize(14);
+            let yPos = 40;
             
             const details = [
-                `رقم الجلسة: ${document.getElementById('confirmSessionId').textContent}`,
-                `نوع الجلسة: ${document.getElementById('confirmSessionType').textContent}`,
-                `اسم العميل: ${document.getElementById('confirmClientName').textContent}`,
-                `رقم الهاتف: ${document.getElementById('confirmPhone').textContent}`,
-                `التاريخ: ${document.getElementById('confirmBookingDate').textContent}`,
-                `الوقت: ${document.getElementById('confirmBookingTime').textContent}`,
-                `السعر: ${document.getElementById('confirmPrice').textContent} ريال`,
-                `المدفوع: ${document.getElementById('confirmPaid').textContent} ريال`,
-                `المتبقي: ${document.getElementById('confirmRemaining').textContent} ريال`
+                { label: "رقم الجلسة:", value: document.getElementById('confirmSessionId').textContent },
+                { label: "اسم العميل:", value: document.getElementById('confirmClientName').textContent },
+                { label: "رقم الهاتف:", value: document.getElementById('confirmPhone').textContent },
+                { label: "نوع الجلسة:", value: document.getElementById('confirmSessionType').textContent },
+                { label: "العنوان:", value: document.getElementById('confirmAddress').textContent },
+                { label: "التاريخ:", value: document.getElementById('confirmBookingDate').textContent },
+                { label: "الوقت:", value: document.getElementById('confirmBookingTime').textContent },
+                { label: "السعر الكلي:", value: document.getElementById('confirmPrice').textContent + " ريال" },
+                { label: "المدفوع:", value: document.getElementById('confirmPaid').textContent + " ريال" },
+                { label: "المتبقي:", value: document.getElementById('confirmRemaining').textContent + " ريال" },
+                { label: "ملاحظات:", value: document.getElementById('confirmNotes').textContent }
             ];
 
-            details.forEach((text, index) => {
-                doc.text(text, 15, 40 + (index * 10));
+            details.forEach(item => {
+                doc.text(item.label, 20, yPos);
+                doc.text(item.value, 80, yPos);
+                yPos += 10;
             });
 
-            const pdfBlob = doc.output('blob');
-            const pdfUrl = URL.createObjectURL(pdfBlob);
-            
-            // Download PDF
-            const link = document.createElement('a');
-            link.href = pdfUrl;
-            link.download = `حجز_${document.getElementById('confirmSessionId').textContent}.pdf`;
-            link.click();
-
-            // Open WhatsApp
-            const phone = document.getElementById('confirmPhone').textContent.replace(/^0/, '966');
-            window.open(`https://wa.me/${phone}?text=مرحباً، تم تأكيد حجزك بنجاح`, '_blank');
-        }
-
-        // Error handling
-        function showError(message) {
-            alert(message);
+            doc.save('حجز.pdf');
         }
     </script>
 </body>
