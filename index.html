@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مهيلة ديوان الشموخ</title>
+    <title>الموقع تحت التطوير - ديوان الشموخ</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -17,17 +17,38 @@
             direction: rtl;
             margin: 0;
             min-height: 100vh;
-            background: #f8f9fa;
+            background: 
+                /* طبقة تظليل بيضاء شفافة */
+                linear-gradient(rgba(255, 255, 255, 0.92), rgba(245, 245, 245, 0.93)),
+                /* الصورة الشفافة */
+                url('s.21.png') center/contain no-repeat,
+                /* خلفية احتياطية */
+                #f8f9fa;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+            position: relative;
+        }
+
+        /* طبقة تحسين التباين */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.85);
+            z-index: 0;
         }
 
         .maintenance-container {
             max-width: 800px;
             padding: 2rem;
             animation: fadeIn 1s ease;
+            position: relative;
+            z-index: 1;
         }
 
         .maintenance-icon {
@@ -41,6 +62,7 @@
             color: var(--primary-color);
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
         p {
@@ -48,6 +70,7 @@
             color: #666;
             line-height: 1.6;
             margin-bottom: 2rem;
+            padding: 0 1rem;
         }
 
         .countdown {
@@ -55,25 +78,30 @@
             justify-content: center;
             gap: 2rem;
             margin-top: 3rem;
+            flex-wrap: wrap;
         }
 
         .countdown-item {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
             min-width: 100px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(44, 120, 108, 0.1);
         }
 
         .countdown-number {
             font-size: 2.5rem;
             color: var(--primary-color);
-            font-weight: bold;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
         .countdown-label {
-            color: #888;
-            font-size: 0.9rem;
+            color: #777;
+            font-size: 0.95rem;
+            letter-spacing: -0.5px;
         }
 
         @keyframes fadeIn {
@@ -83,18 +111,32 @@
 
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-30px); }
-            60% { transform: translateY(-15px); }
+            40% { transform: translateY(-25px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                background-size: 80% auto;
+            }
+            
+            .maintenance-icon {
+                font-size: 5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="maintenance-container">
         <i class="fas fa-tools maintenance-icon"></i>
-        <h1>الموقع قيد التطوير والصيانة</h1>
+        <h1>ديوان الشموخ قيد التطوير</h1>
         <p>
-            نعمل حالياً على تحسين تجربتكم. سنعود قريباً بإصدار جديد ومميز!<br>
-            شكراً لتفهمكم وصبركم.
+            نقوم بإجراء تحسينات لتقديم تجربة فريدة لكم<br>
+            العودة المتوقعة خلال:
         </p>
 
         <div class="countdown">
@@ -114,7 +156,7 @@
     </div>
 
     <script>
-        // عد تنازلي مثال (يمكن تغيير التاريخ المستهدف)
+        // عد تنازلي حتى 1 أغسطس 2024
         const targetDate = new Date('2024-08-01T00:00:00').getTime();
 
         function updateCountdown() {
@@ -131,14 +173,17 @@
 
             if (distance < 0) {
                 clearInterval(countdownInterval);
-                document.querySelector('.countdown').innerHTML = '<p>...</p>';
+                document.querySelector('.countdown').innerHTML = `
+                    <p style="color: var(--primary-color); font-weight: bold;">
+                        ¡ تم الانتهاء من التحديث بنجاح !
+                    </p>
+                `;
                 setTimeout(() => window.location.reload(), 3000);
             }
         }
 
-        // تحديث العد التنازلي كل دقيقة
-        const countdownInterval = setInterval(updateCountdown, 60000);
-        updateCountdown(); // التشغيل الأولي
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
     </script>
 </body>
 </html>
