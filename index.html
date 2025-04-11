@@ -1,60 +1,55 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الموقع تحت التطوير - ديوان الشموخ</title>
+    <title>الموقع تحت الصيانة - مهيلة ديوان الشموخ</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
             --primary-color: #2c786c;
             --secondary-color: #ff9800;
+            --text-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             font-family: 'Tajawal', sans-serif;
-            direction: rtl;
-            margin: 0;
             min-height: 100vh;
-            background: 
-                /* طبقة تظليل بيضاء شفافة */
-                linear-gradient(rgba(255, 255, 255, 0.92), rgba(245, 245, 245, 0.93)),
-                /* الصورة الشفافة */
-                url('s.21.png') center/contain no-repeat,
-                /* خلفية احتياطية */
-                #f8f9fa;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: #f8f9fa;
+            padding: 1rem;
             text-align: center;
-            position: relative;
-        }
-
-        /* طبقة تحسين التباين */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.85);
-            z-index: 0;
         }
 
         .maintenance-container {
             max-width: 800px;
-            padding: 2rem;
+            padding: 3rem 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             animation: fadeIn 1s ease;
-            position: relative;
-            z-index: 1;
+        }
+
+        .logo {
+            width: 150px;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
         }
 
         .maintenance-icon {
-            font-size: 8rem;
+            font-size: 4rem;
             color: var(--primary-color);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             animation: bounce 2s infinite;
         }
 
@@ -62,46 +57,51 @@
             color: var(--primary-color);
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
 
         p {
-            font-size: 1.2rem;
-            color: #666;
-            line-height: 1.6;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            line-height: 1.8;
             margin-bottom: 2rem;
-            padding: 0 1rem;
         }
 
         .countdown {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
+            margin: 2rem 0;
         }
 
         .countdown-item {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
             min-width: 100px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(44, 120, 108, 0.1);
         }
 
         .countdown-number {
-            font-size: 2.5rem;
-            color: var(--primary-color);
+            font-size: 2rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
         }
 
-        .countdown-label {
-            color: #777;
-            font-size: 0.95rem;
-            letter-spacing: -0.5px;
+        .social-links {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .social-link {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--secondary-color);
+            transform: translateY(-3px);
         }
 
         @keyframes fadeIn {
@@ -111,79 +111,80 @@
 
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-25px); }
+            40% { transform: translateY(-20px); }
             60% { transform: translateY(-10px); }
         }
 
         @media (max-width: 768px) {
-            body {
-                background-size: 80% auto;
-            }
-            
-            .maintenance-icon {
-                font-size: 5rem;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
+            h1 { font-size: 2rem; }
+            .countdown { gap: 1rem; }
+            .countdown-item { min-width: 80px; padding: 0.8rem; }
         }
     </style>
 </head>
 <body>
     <div class="maintenance-container">
-        <i class="fas fa-tools maintenance-icon"></i>
-        <h1>ديوان الشموخ قيد التطوير</h1>
+        <!-- يمكن استبدالها بشعار المؤسسة -->
+        <div class="maintenance-icon">
+            <i class="fas fa-tools"></i>
+        </div>
+
+        <h1>الموقع قيد التطوير والصيانة</h1>
+        
         <p>
-            نقوم بإجراء تحسينات لتقديم تجربة فريدة لكم<br>
-            العودة المتوقعة خلال:
+            نعمل حالياً على تحسين تجربتكم بشكل أفضل.<br>
+            نعتذر للإزعاج وسنعود قريباً بإصدار أكثر تميزاً.<br>
+            يمكنكم متابعة آخر التحديثات عبر قنوات التواصل الاجتماعي.
         </p>
 
-        <div class="countdown">
+        <div class="countdown" id="countdown">
             <div class="countdown-item">
                 <div class="countdown-number" id="days">05</div>
-                <div class="countdown-label">أيام</div>
+                <div>أيام</div>
             </div>
             <div class="countdown-item">
-                <div class="countdown-number" id="hours">18</div>
-                <div class="countdown-label">ساعات</div>
+                <div class="countdown-number" id="hours">12</div>
+                <div>ساعات</div>
             </div>
             <div class="countdown-item">
-                <div class="countdown-number" id="minutes">47</div>
-                <div class="countdown-label">دقائق</div>
+                <div class="countdown-number" id="minutes">30</div>
+                <div>دقائق</div>
             </div>
+        </div>
+
+        <div class="social-links">
+            <a href="#" class="social-link">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-link">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-link">
+                <i class="fab fa-whatsapp"></i>
+            </a>
         </div>
     </div>
 
     <script>
-        // عد تنازلي حتى 1 أغسطس 2024
-        const targetDate = new Date('2024-08-01T00:00:00').getTime();
+        // مؤتمر العد التنازلي (يمكن تعديل التاريخ)
+        const countDownDate = new Date("Jan 1, 2025 00:00:00").getTime();
 
         function updateCountdown() {
             const now = new Date().getTime();
-            const distance = targetDate - now;
+            const distance = countDownDate - now;
 
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 
-            document.getElementById('days').textContent = days.toString().padStart(2, '0');
-            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-
-            if (distance < 0) {
-                clearInterval(countdownInterval);
-                document.querySelector('.countdown').innerHTML = `
-                    <p style="color: var(--primary-color); font-weight: bold;">
-                        ¡ تم الانتهاء من التحديث بنجاح !
-                    </p>
-                `;
-                setTimeout(() => window.location.reload(), 3000);
-            }
+            document.getElementById('days').innerText = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
         }
 
-        const countdownInterval = setInterval(updateCountdown, 1000);
-        updateCountdown();
+        // تحديث العد التنازلي كل ثانية
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // التشغيل الأولي
     </script>
 </body>
 </html>
