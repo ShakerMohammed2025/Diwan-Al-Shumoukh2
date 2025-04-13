@@ -8,14 +8,13 @@
   <!-- تضمين أيقونات Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   
-  <!-- تضمين خط من Google (يمكنك تغييره إذا رغبت) -->
+  <!-- تضمين خط من Google -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
   
   <!-- تضمين مكتبة Lottie Player -->
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" defer></script>
   
   <style>
-    /* إعادة تعيين العناصر الأساسية */
     * {
       margin: 0;
       padding: 0;
@@ -28,10 +27,8 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      position: relative;
     }
     
-    /* عنصر الحاوية الرئيسي للصفحة */
     .container {
       background-color: #fff;
       max-width: 500px;
@@ -43,7 +40,6 @@
       text-align: center;
     }
     
-    /* شعار العلامة التجارية */
     .brand-logo {
       font-size: 28px;
       font-weight: 700;
@@ -51,14 +47,14 @@
       margin-bottom: 10px;
     }
     
-    /* مشهد متحرك باستخدام Lottie */
+    /* التعديل: إضافة display: block للرسوم المتحركة */
     .animation {
       width: 200px;
       height: 200px;
       margin: 0 auto 20px;
+      display: block;
     }
     
-    /* عناوين ورسائل */
     h1 {
       font-size: 24px;
       color: #006d5b;
@@ -72,7 +68,6 @@
       margin-bottom: 15px;
     }
     
-    /* قسم العد التنازلي */
     .countdown {
       display: flex;
       justify-content: center;
@@ -98,7 +93,6 @@
       font-size: 12px;
     }
     
-    /* نموذج الاشتراك بالبريد */
     .subscription {
       margin-bottom: 20px;
     }
@@ -128,7 +122,6 @@
       background: #00b894;
     }
     
-    /* أيقونات التواصل الاجتماعي */
     .social-icons {
       margin-bottom: 20px;
     }
@@ -145,7 +138,6 @@
       transform: scale(1.2);
     }
     
-    /* زر تغيير اللغة */
     .language-switch {
       display: flex;
       justify-content: center;
@@ -168,7 +160,6 @@
       color: #fff;
     }
     
-    /* زر واتساب ثابت أسفل الصفحة */
     .whatsapp-btn {
       position: fixed;
       bottom: 20px;
@@ -192,7 +183,6 @@
       transform: scale(1.1);
     }
     
-    /* استجابة للهواتف */
     @media(max-width: 600px) {
       .container {
         padding: 20px;
@@ -206,25 +196,21 @@
 </head>
 <body>
   
-  <!-- الحاوية الرئيسية للصفحة -->
   <div class="container">
-    <!-- شعار العلامة التجارية -->
     <div class="brand-logo">شعار العلامة التجارية</div>
     
-    <!-- مشهد متحرك باستخدام Lottie -->
+    <!-- الرسوم المتحركة مع رابط بديل -->
     <lottie-player class="animation" 
-      src="https://assets5.lottiefiles.com/packages/lf20_stytjnjn.json"  
+      src="https://assets5.lottiefiles.com/packages/lf20_soCRuE.json"  
       background="transparent"  
       speed="1"  
       loop  
       autoplay>
     </lottie-player>
     
-    <!-- العنوان الرئيسي والرسالة -->
     <h1>الموقع تحت التطوير والصيانة</h1>
     <p>مرحباً! نحن نعمل على تطوير شيء رائع لكم. ترقبوا التحديثات قريباً!</p>
     
-    <!-- عد تنازلي لإعادة الإطلاق -->
     <div class="countdown" id="countdown">
       <div class="countdown-item">
         <div class="countdown-number" id="days">00</div>
@@ -244,34 +230,36 @@
       </div>
     </div>
     
-    <!-- نموذج الاشتراك بالبريد الإلكتروني -->
     <div class="subscription">
       <input type="email" placeholder="أدخل بريدك الإلكتروني" />
       <button type="submit">اشتراك</button>
     </div>
     
-    <!-- أيقونات التواصل الاجتماعي -->
+    <!-- تحديث: إضافة الروابط الفعلية للتواصل -->
     <div class="social-icons">
-      <a href="https://www.facebook.com" target="_blank" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://www.instagram.com" target="_blank" title="إنستقرام"><i class="fab fa-instagram"></i></a>
-      <a href="https://wa.me/966000000000" target="_blank" title="واتساب"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://www.facebook.com/share/192s7S9hfB/" target="_blank" title="فيسبوك">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://www.instagram.com/mhyldywn?igsh=ZGFzcG1zOXFib2gw" target="_blank" title="إنستقرام">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://wa.me/966532989930" target="_blank" title="واتساب">
+        <i class="fab fa-whatsapp"></i>
+      </a>
     </div>
     
-    <!-- زر تغيير اللغة -->
     <div class="language-switch">
       <button onclick="switchLanguage('ar')">العربية</button>
       <button onclick="switchLanguage('en')">English</button>
     </div>
   </div>
   
-  <!-- زر واتساب ثابت للتواصل السريع -->
-  <a href="https://wa.me/966000000000" target="_blank" class="whatsapp-btn" title="تواصل عبر واتساب">
+  <!-- تحديث رقم واتساب -->
+  <a href="https://wa.me/966532989930" target="_blank" class="whatsapp-btn" title="تواصل عبر واتساب">
     <i class="fab fa-whatsapp"></i>
   </a>
   
   <script>
-    // عد تنازلي لإعادة الإطلاق
-    // تعديل التاريخ هنا حسب موعد إعادة الإطلاق (مثلاً: 1 يناير 2026)
     const launchDate = new Date("Jan 1, 2026 00:00:00").getTime();
     
     function updateCountdown() {
@@ -279,7 +267,6 @@
       const distance = launchDate - now;
       
       if(distance < 0) {
-        // انتهاء العد التنازلي
         document.getElementById("countdown").innerHTML = "<p>تم إعادة إطلاق الموقع!</p>";
         clearInterval(countdownInterval);
         return;
@@ -299,10 +286,7 @@
     const countdownInterval = setInterval(updateCountdown, 1000);
     updateCountdown();
     
-    // زر تغيير اللغة: في هذه الدالة يمكن تعديل محتويات الصفحة تبعًا للغة المختارة
     function switchLanguage(lang) {
-      // مثال مبسط: يتم تغيير النصوص بحسب اللغة
-      // يمكنك توسيع الدالة لتغيير باقي المحتوى (العناوين، العبارات، ... إلخ)
       if (lang === 'en') {
         document.querySelector('h1').innerText = "Site Under Maintenance";
         document.querySelector('p').innerText = "Hello! We are working on something great for you. Stay tuned for updates!";
