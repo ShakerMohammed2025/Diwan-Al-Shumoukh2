@@ -3,84 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>الموقع قيد التطوير</title>
+  <title>الموقع تحت الصيانة</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(to bottom, #e8f0f9, #f5f9fc);
       margin: 0;
-      padding: 0;
-      font-family: 'Tajawal', sans-serif;
-      background: linear-gradient(135deg, #e8f0f8, #fdfdfd);
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       height: 100vh;
+      text-align: center;
     }
 
     .card {
-      background-color: #fff;
+      background-color: white;
+      padding: 40px;
       border-radius: 20px;
-      padding: 40px 30px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      max-width: 350px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 90%;
     }
 
-    .icon i {
-      font-size: 48px;
-      color: #227c71;
-      animation: spin 3s linear infinite; /* دوران الأيقونة */
+    .animated-icon {
+      width: 80px;
+      margin-bottom: 20px;
+      animation: wrenchMove 2s infinite ease-in-out;
     }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    @keyframes wrenchMove {
+      0%, 100% {
+        transform: rotate(-15deg);
+      }
+      50% {
+        transform: rotate(15deg);
+      }
     }
 
-    h2 {
-      color: #227c71;
-      margin: 20px 0 10px;
+    h1 {
+      color: #006d5b;
+      font-size: 24px;
+      margin-bottom: 20px;
     }
 
     p {
-      color: #444;
+      color: #333;
       font-size: 16px;
-      line-height: 1.6;
+      margin-bottom: 15px;
     }
 
     .social-icons {
       margin-top: 20px;
     }
 
-    .social-icons i {
-      font-size: 22px;
+    .social-icons a {
       margin: 0 10px;
-      color: #227c71;
-      transition: 0.3s;
+      color: #006d5b;
+      font-size: 20px;
+      text-decoration: none;
+      transition: transform 0.3s;
     }
 
-    .social-icons i:hover {
-      color: #1d5e56;
+    .social-icons a:hover {
+      transform: scale(1.2);
+      color: #00b894;
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <!-- التغيير الرئيسي هنا -->
-    <div class="icon">
-      <i class="fas fa-cogs"></i> <!-- الأيقونة الجديدة -->
-    </div>
-    
-    <h2>الموقع قيد التطوير والصيانة</h2>
-    <p>
-      نعمل حالياً على تحسين تجربتكم وجعلها أكثر تميزاً. نعتذر عن أي إزعاج، وسنعود قريباً بتصميم جديد احترافي.
-      تابعوا آخر التحديثات عبر قنوات التواصل الاجتماعي.
-    </p>
-    <p>انتهى العد التنازلي</p>
+    <svg class="animated-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+      <path fill="#006d5b" d="M501.1 197.4c-9.4-9.4-24.6-9.4-33.9 0l-44.7 44.7-55.4-55.4 44.7-44.7c9.4-9.4 9.4-24.6 0-33.9L320 7.5c-9.4-9.4-24.6-9.4-33.9 0L217.4 76.1c-38.4-6.3-79.7 6.4-109.5 36.2-40.6 40.6-49.2 101.3-26 150.3l-67 67c-28.1 28.1-28.1 73.7 0 101.8l31.7 31.7c28.1 28.1 73.7 28.1 101.8 0l67-67c49 23.2 109.7 14.6 150.3-26 29.8-29.8 42.5-71.1 36.2-109.5l68.6-68.6c9.4-9.3 9.4-24.5 0-33.8zM160 416c-8.8 8.8-23 8.8-31.8 0s-8.8-23 0-31.8l96-96 31.8 31.8-96 96zm160-160l-31.8-31.8 96-96c8.8-8.8 23-8.8 31.8 0s8.8 23 0 31.8l-96 96z"/>
+    </svg>
+    <h1>الموقع قيد التطوير والصيانة</h1>
+    <p>نعمل حالياً على تحسين تجربتكم وجعلها أكثر تميزاً.</p>
+    <p>نعتذر عن أي إزعاج، وسنعود قريباً بتصميم جديد احترافي.</p>
+    <p>تابعوا آخر التحديثات عبر قنوات التواصل.</p>
     <div class="social-icons">
-      <i class="fab fa-whatsapp"></i>
-      <i class="fab fa-instagram"></i>
-      <i class="fab fa-facebook"></i>
+      <a href="#"><i class="fab fa-whatsapp"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
     </div>
   </div>
 </body>
