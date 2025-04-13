@@ -1,193 +1,193 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الموقع تحت الصيانة - مهيلة ديوان الشموخ</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --primary-color: #2c786c;
-            --secondary-color: #ff9800;
-            --text-color: #333;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الموقع تحت الصيانة - مهيلة ديوان الشموخ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #2c786c;
+      --secondary-color: #ff9800;
+      --text-color: #333;
+      --background: #f8f9fa;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Tajawal', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f8f9fa;
-            padding: 1rem;
-            text-align: center;
-        }
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: var(--background);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
 
-        .maintenance-container {
-            max-width: 800px;
-            padding: 3rem 2rem;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1s ease;
-        }
+    .container {
+      background: #fff;
+      border-radius: 15px;
+      padding: 3rem;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      animation: fadeIn 1s ease;
+    }
 
-        .logo {
-            width: 150px;
-            margin-bottom: 2rem;
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
-        }
+    .icon {
+      font-size: 4rem;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      animation: bounce 2s infinite;
+    }
 
-        .maintenance-icon {
-            font-size: 4rem;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            animation: bounce 2s infinite;
-        }
+    h1 {
+      font-size: 2.2rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
 
-        h1 {
-            color: var(--primary-color);
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
+    p {
+      color: var(--text-color);
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
 
-        p {
-            color: var(--text-color);
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 2rem;
-        }
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
 
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 2rem 0;
-        }
+    .countdown-item {
+      background: var(--primary-color);
+      color: #fff;
+      border-radius: 10px;
+      padding: 0.75rem;
+      min-width: 80px;
+    }
 
-        .countdown-item {
-            background: var(--primary-color);
-            color: white;
-            padding: 1rem;
-            border-radius: 10px;
-            min-width: 100px;
-        }
+    .countdown-number {
+      font-size: 2rem;
+      font-weight: bold;
+    }
 
-        .countdown-number {
-            font-size: 2rem;
-            font-weight: 700;
-        }
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
 
-        .social-links {
-            margin-top: 2rem;
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-        }
+    .social-link {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      transition: transform 0.3s, color 0.3s;
+    }
 
-        .social-link {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            transition: all 0.3s ease;
-        }
+    .social-link:hover {
+      color: var(--secondary-color);
+      transform: translateY(-3px);
+    }
 
-        .social-link:hover {
-            color: var(--secondary-color);
-            transform: translateY(-3px);
-        }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-20px); }
+      60% { transform: translateY(-10px); }
+    }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-20px); }
-            60% { transform: translateY(-10px); }
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            .countdown { gap: 1rem; }
-            .countdown-item { min-width: 80px; padding: 0.8rem; }
-        }
-    </style>
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      .countdown {
+        gap: 1rem;
+      }
+      .countdown-item {
+        min-width: 60px;
+        padding: 0.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="maintenance-container">
-        <!-- يمكن استبدالها بشعار المؤسسة -->
-        <div class="maintenance-icon">
-            <i class="fas fa-tools"></i>
-        </div>
+  <main class="container">
+    <div class="icon">
+      <i class="fas fa-tools"></i>
+    </div>
+    <h1>الموقع قيد التطوير والصيانة</h1>
+    <p>
+      نعمل حالياً على تحسين تجربتكم؛ نعتذر عن الإزعاج وسنعود قريباً بإصدار جديد.<br>
+      تابعوا آخر التحديثات عبر مواقع التواصل الاجتماعي.
+    </p>
 
-        <h1>الموقع قيد التطوير والصيانة</h1>
-        
-        <p>
-            نعمل حالياً على تحسين تجربتكم بشكل أفضل.<br>
-            نعتذر للإزعاج وسنعود قريباً بإصدار أكثر تميزاً.<br>
-            يمكنكم متابعة آخر التحديثات عبر قنوات التواصل الاجتماعي.
-        </p>
+    <div class="countdown" id="countdown">
+      <div class="countdown-item">
+        <div class="countdown-number" id="days">00</div>
+        <div>أيام</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-number" id="hours">00</div>
+        <div>ساعات</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-number" id="minutes">00</div>
+        <div>دقائق</div>
+      </div>
+    </div>
 
-        <div class="countdown" id="countdown">
-            <div class="countdown-item">
-                <div class="countdown-number" id="days">05</div>
-                <div>أيام</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="hours">12</div>
-                <div>ساعات</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="minutes">30</div>
-                <div>دقائق</div>
-            </div>
-        </div>
-<div class="social-links">
-    <a href="https://www.facebook.com/share/1Ue8tXybK9/" class="social-link" target="_blank">
+    <div class="social-links">
+      <a href="https://www.facebook.com/share/1Ue8tXybK9/" class="social-link" target="_blank">
         <i class="fab fa-facebook"></i>
-        <span></span>
-    </a>
-    
-    <a href="https://www.instagram.com/mhyldywn?igsh=ZGFzcG1zOXFib2gw" class="social-link" target="_blank">
+      </a>
+      <a href="https://www.instagram.com/mhyldywn?igsh=ZGFzcG1zOXFib2gw" class="social-link" target="_blank">
         <i class="fab fa-instagram"></i>
-        <span></span>
-    </a>
-    
-    <a href="https://wa.me/966532989930" class="social-link" target="_blank">
+      </a>
+      <a href="https://wa.me/966532989930" class="social-link" target="_blank">
         <i class="fab fa-whatsapp"></i>
-        <span></span>
-    </a>
-</div>
+      </a>
+    </div>
+  </main>
 
-    <script>
-        // مؤتمر العد التنازلي (يمكن تعديل التاريخ)
-        const countDownDate = new Date("Jan 1, 2025 00:00:00").getTime();
+  <script>
+    // تحديد التاريخ المستهدف للعد التنازلي
+    const countDownDate = new Date("Jan 1, 2025 00:00:00").getTime();
 
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = countDownDate - now;
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = countDownDate - now;
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      if (distance < 0) {
+        document.getElementById("countdown").innerHTML = "<p>انتهى العد التنازلي</p>";
+        clearInterval(countdownInterval);
+        return;
+      }
 
-            document.getElementById('days').innerText = days.toString().padStart(2, '0');
-            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
-            document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
-        }
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 
-        // تحديث العد التنازلي كل ثانية
-        setInterval(updateCountdown, 1000);
-        updateCountdown(); // التشغيل الأولي
-    </script>
+      document.getElementById("days").innerText = days.toString().padStart(2, '0');
+      document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+      document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+    }
+
+    const countdownInterval = setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
 </body>
 </html>
