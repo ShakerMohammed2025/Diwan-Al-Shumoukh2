@@ -3,228 +3,85 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>الموقع تحت الصيانة - مهيلة ديوان الشموخ</title>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>الموقع قيد التطوير</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    :root {
-      --primary-color: #2c786c;
-      --secondary-color: #ff9800;
-      --text-color: #333;
-      --bg-gradient-start: #f8f9fa;
-      --bg-gradient-end: #e3f2fd;
-    }
-
-    /* إعادة تعيين القيم الأساسية */
-    * {
+    body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
       font-family: 'Tajawal', sans-serif;
-      min-height: 100vh;
+      background: linear-gradient(135deg, #e8f0f8, #fdfdfd);
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
-      padding: 20px;
-      text-align: center;
-      overflow: hidden;
+      height: 100vh;
     }
 
-    /* تأثير دخول ديناميكي للكونتينر */
-    .container {
-      background: #fff;
+    .card {
+      background-color: #fff;
       border-radius: 20px;
-      padding: 3rem 2rem;
-      width: 100%;
-      max-width: 600px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-      position: relative;
-      animation: scaleFadeIn 1s ease forwards;
-      opacity: 0;
+      padding: 40px 30px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 350px;
     }
 
-    @keyframes scaleFadeIn {
-      0% {
-        opacity: 0;
-        transform: scale(0.9);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
+    .icon i {
+      font-size: 48px;
+      color: #227c71;
+      animation: spin 3s linear infinite; /* دوران الأيقونة */
     }
 
-    /* حركة متطورة للرمز */
-    .icon {
-      font-size: 4rem;
-      color: var(--primary-color);
-      margin-bottom: 1.5rem;
-      animation: advancedBounce 2s infinite;
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
-    @keyframes advancedBounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-25px); }
-      60% { transform: translateY(-15px); }
-    }
-
-    h1 {
-      font-size: 2.4rem;
-      color: var(--primary-color);
-      margin-bottom: 1rem;
-      letter-spacing: 1px;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    h2 {
+      color: #227c71;
+      margin: 20px 0 10px;
     }
 
     p {
-      color: var(--text-color);
-      font-size: 1.15rem;
-      line-height: 1.8;
-      margin-bottom: 2rem;
+      color: #444;
+      font-size: 16px;
+      line-height: 1.6;
     }
 
-    /* تأثير إضاءة خفيفة على العد التنازلي عند التحويم */
-    .countdown {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-      transition: transform 0.5s ease;
-    }
-    .countdown:hover {
-      transform: scale(1.02);
+    .social-icons {
+      margin-top: 20px;
     }
 
-    .countdown-item {
-      background: var(--primary-color);
-      color: #fff;
-      padding: 1rem;
-      border-radius: 10px;
-      min-width: 80px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      transition: background 0.4s ease;
-    }
-    .countdown-item:hover {
-      background: var(--secondary-color);
+    .social-icons i {
+      font-size: 22px;
+      margin: 0 10px;
+      color: #227c71;
+      transition: 0.3s;
     }
 
-    .countdown-number {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 0.3rem;
-    }
-
-    /* تصميم الروابط الاجتماعية مع تأثير الدوران على التحويم */
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 1.2rem;
-      margin-top: 1.5rem;
-    }
-    .social-link {
-      font-size: 1.8rem;
-      color: var(--primary-color);
-      transition: transform 0.3s ease, color 0.3s ease;
-    }
-    .social-link:hover {
-      color: var(--secondary-color);
-      transform: rotate(10deg) translateY(-3px);
-    }
-
-    /* تأثيرات تباين للهواتف */
-    @media (max-width: 600px) {
-      h1 { font-size: 1.8rem; }
-      .countdown {
-        gap: 1rem;
-      }
-      .countdown-item {
-        min-width: 60px;
-        padding: 0.75rem;
-      }
-      p { font-size: 1rem; }
-    }
-
-    /* تأثير مظهر إضافي باستخدام ::before */
-    .container::before {
-      content: "";
-      position: absolute;
-      top: -15px;
-      right: -15px;
-      bottom: -15px;
-      left: -15px;
-      z-index: -1;
-      background: linear-gradient(45deg, rgba(255,255,255,0.2), rgba(0,0,0,0.05));
-      border-radius: 25px;
-      filter: blur(15px);
+    .social-icons i:hover {
+      color: #1d5e56;
     }
   </style>
 </head>
 <body>
-  <main class="container">
+  <div class="card">
+    <!-- التغيير الرئيسي هنا -->
     <div class="icon">
-      <i class="fas fa-tools"></i>
+      <i class="fas fa-cogs"></i> <!-- الأيقونة الجديدة -->
     </div>
-    <h1>الموقع قيد التطوير والصيانة</h1>
+    
+    <h2>الموقع قيد التطوير والصيانة</h2>
     <p>
-      نعمل حالياً على تحسين تجربتكم وجعلها أكثر تميزاً. نعتذر عن أي إزعاج، وسنعود قريباً بتصميم جديد احترافي.<br>
+      نعمل حالياً على تحسين تجربتكم وجعلها أكثر تميزاً. نعتذر عن أي إزعاج، وسنعود قريباً بتصميم جديد احترافي.
       تابعوا آخر التحديثات عبر قنوات التواصل الاجتماعي.
     </p>
-    <div class="countdown" id="countdown">
-      <div class="countdown-item">
-        <div class="countdown-number" id="days">00</div>
-        <div>أيام</div>
-      </div>
-      <div class="countdown-item">
-        <div class="countdown-number" id="hours">00</div>
-        <div>ساعات</div>
-      </div>
-      <div class="countdown-item">
-        <div class="countdown-number" id="minutes">00</div>
-        <div>دقائق</div>
-      </div>
+    <p>انتهى العد التنازلي</p>
+    <div class="social-icons">
+      <i class="fab fa-whatsapp"></i>
+      <i class="fab fa-instagram"></i>
+      <i class="fab fa-facebook"></i>
     </div>
-    <div class="social-links">
-      <a href="https://www.facebook.com/share/1Ue8tXybK9/" class="social-link" target="_blank">
-        <i class="fab fa-facebook"></i>
-      </a>
-      <a href="https://www.instagram.com/mhyldywn?igsh=ZGFzcG1zOXFib2gw" class="social-link" target="_blank">
-        <i class="fab fa-instagram"></i>
-      </a>
-      <a href="https://wa.me/966532989930" class="social-link" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-      </a>
-    </div>
-  </main>
-
-  <script>
-    // تحديد التاريخ المستهدف للعد التنازلي
-    const countDownDate = new Date("Jan 1, 2025 00:00:00").getTime();
-
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = countDownDate - now;
-
-      if (distance < 0) {
-        document.getElementById("countdown").innerHTML = "<p>انتهى العد التنازلي</p>";
-        clearInterval(countdownInterval);
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-      document.getElementById("days").innerText = days.toString().padStart(2, '0');
-      document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
-      document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
-    }
-
-    const countdownInterval = setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
+  </div>
 </body>
 </html>
