@@ -3,88 +3,314 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>الموقع تحت الصيانة</title>
+  <title>الموقع تحت التطوير والصيانة</title>
+  
+  <!-- تضمين أيقونات Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- تضمين خط من Google (يمكنك تغييره إذا رغبت) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- تضمين مكتبة Lottie Player -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  
   <style>
+    /* إعادة تعيين العناصر الأساسية */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
     body {
       font-family: 'Cairo', sans-serif;
       background: linear-gradient(to bottom, #e8f0f9, #f5f9fc);
-      margin: 0;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
+      flex-direction: column;
+      min-height: 100vh;
+      position: relative;
     }
-
-    .card {
-      background-color: white;
-      padding: 40px;
+    
+    /* عنصر الحاوية الرئيسي للصفحة */
+    .container {
+      background-color: #fff;
+      max-width: 500px;
+      width: 90%;
+      margin: 30px auto;
+      padding: 30px;
       border-radius: 20px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      max-width: 400px;
-      width: 90%;
+      text-align: center;
     }
-
-    .animated-icon {
-      width: 80px;
-      margin-bottom: 20px;
-      animation: wrenchMove 2s infinite ease-in-out;
-    }
-
-    @keyframes wrenchMove {
-      0%, 100% {
-        transform: rotate(-15deg);
-      }
-      50% {
-        transform: rotate(15deg);
-      }
-    }
-
-    h1 {
+    
+    /* شعار العلامة التجارية */
+    .brand-logo {
+      font-size: 28px;
+      font-weight: 700;
       color: #006d5b;
-      font-size: 24px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
-
-    p {
-      color: #333;
-      font-size: 16px;
+    
+    /* مشهد متحرك باستخدام Lottie */
+    .animation {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 20px;
+    }
+    
+    /* عناوين ورسائل */
+    h1 {
+      font-size: 24px;
+      color: #006d5b;
       margin-bottom: 15px;
     }
-
-    .social-icons {
-      margin-top: 20px;
+    
+    p {
+      font-size: 16px;
+      color: #333;
+      line-height: 1.6;
+      margin-bottom: 15px;
     }
-
-    .social-icons a {
-      margin: 0 10px;
-      color: #006d5b;
+    
+    /* قسم العد التنازلي */
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .countdown-item {
+      background: #006d5b;
+      padding: 10px 15px;
+      border-radius: 8px;
+      color: #fff;
+      min-width: 60px;
+    }
+    
+    .countdown-number {
       font-size: 20px;
-      text-decoration: none;
-      transition: transform 0.3s;
+      font-weight: bold;
+      margin-bottom: 5px;
     }
-
+    
+    .countdown-label {
+      font-size: 12px;
+    }
+    
+    /* نموذج الاشتراك بالبريد */
+    .subscription {
+      margin-bottom: 20px;
+    }
+    
+    .subscription input[type="email"] {
+      padding: 10px;
+      width: 70%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 5px;
+      outline: none;
+      font-size: 14px;
+    }
+    
+    .subscription button {
+      padding: 10px 15px;
+      border: none;
+      background: #006d5b;
+      color: #fff;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .subscription button:hover {
+      background: #00b894;
+    }
+    
+    /* أيقونات التواصل الاجتماعي */
+    .social-icons {
+      margin-bottom: 20px;
+    }
+    
+    .social-icons a {
+      font-size: 22px;
+      color: #006d5b;
+      margin: 0 10px;
+      transition: transform 0.3s, color 0.3s;
+    }
+    
     .social-icons a:hover {
-      transform: scale(1.2);
       color: #00b894;
+      transform: scale(1.2);
+    }
+    
+    /* زر تغيير اللغة */
+    .language-switch {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .language-switch button {
+      border: 1px solid #006d5b;
+      background: transparent;
+      color: #006d5b;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s, color 0.3s;
+    }
+    
+    .language-switch button:hover {
+      background: #006d5b;
+      color: #fff;
+    }
+    
+    /* زر واتساب ثابت أسفل الصفحة */
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25d366;
+      color: #fff;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 28px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s;
+      z-index: 1000;
+    }
+    
+    .whatsapp-btn:hover {
+      transform: scale(1.1);
+    }
+    
+    /* استجابة للهواتف */
+    @media(max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+      .countdown-item {
+        padding: 8px 10px;
+        min-width: 50px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <svg class="animated-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-      <path fill="#006d5b" d="M501.1 197.4c-9.4-9.4-24.6-9.4-33.9 0l-44.7 44.7-55.4-55.4 44.7-44.7c9.4-9.4 9.4-24.6 0-33.9L320 7.5c-9.4-9.4-24.6-9.4-33.9 0L217.4 76.1c-38.4-6.3-79.7 6.4-109.5 36.2-40.6 40.6-49.2 101.3-26 150.3l-67 67c-28.1 28.1-28.1 73.7 0 101.8l31.7 31.7c28.1 28.1 73.7 28.1 101.8 0l67-67c49 23.2 109.7 14.6 150.3-26 29.8-29.8 42.5-71.1 36.2-109.5l68.6-68.6c9.4-9.3 9.4-24.5 0-33.8zM160 416c-8.8 8.8-23 8.8-31.8 0s-8.8-23 0-31.8l96-96 31.8 31.8-96 96zm160-160l-31.8-31.8 96-96c8.8-8.8 23-8.8 31.8 0s8.8 23 0 31.8l-96 96z"/>
-    </svg>
-    <h1>الموقع قيد التطوير والصيانة</h1>
-    <p>نعمل حالياً على تحسين تجربتكم وجعلها أكثر تميزاً.</p>
-    <p>نعتذر عن أي إزعاج، وسنعود قريباً بتصميم جديد احترافي.</p>
-    <p>تابعوا آخر التحديثات عبر قنوات التواصل.</p>
+  
+  <!-- الحاوية الرئيسية للصفحة -->
+  <div class="container">
+    <!-- شعار العلامة التجارية -->
+    <div class="brand-logo">شعار العلامة التجارية</div>
+    
+    <!-- مشهد متحرك باستخدام Lottie -->
+    <lottie-player class="animation" 
+      src="https://assets5.lottiefiles.com/packages/lf20_stytjnjn.json"  
+      background="transparent"  
+      speed="1"  
+      loop  
+      autoplay>
+    </lottie-player>
+    
+    <!-- العنوان الرئيسي والرسالة -->
+    <h1>الموقع تحت التطوير والصيانة</h1>
+    <p>مرحباً! نحن نعمل على تطوير شيء رائع لكم. ترقبوا التحديثات قريباً!</p>
+    
+    <!-- عد تنازلي لإعادة الإطلاق -->
+    <div class="countdown" id="countdown">
+      <div class="countdown-item">
+        <div class="countdown-number" id="days">00</div>
+        <div class="countdown-label">أيام</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-number" id="hours">00</div>
+        <div class="countdown-label">ساعات</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-number" id="minutes">00</div>
+        <div class="countdown-label">دقائق</div>
+      </div>
+      <div class="countdown-item">
+        <div class="countdown-number" id="seconds">00</div>
+        <div class="countdown-label">ثواني</div>
+      </div>
+    </div>
+    
+    <!-- نموذج الاشتراك بالبريد الإلكتروني -->
+    <div class="subscription">
+      <input type="email" placeholder="أدخل بريدك الإلكتروني" />
+      <button type="submit">اشتراك</button>
+    </div>
+    
+    <!-- أيقونات التواصل الاجتماعي -->
     <div class="social-icons">
-      <a href="#"><i class="fab fa-whatsapp"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.facebook.com" target="_blank" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com" target="_blank" title="إنستقرام"><i class="fab fa-instagram"></i></a>
+      <a href="https://wa.me/966000000000" target="_blank" title="واتساب"><i class="fab fa-whatsapp"></i></a>
+    </div>
+    
+    <!-- زر تغيير اللغة -->
+    <div class="language-switch">
+      <button onclick="switchLanguage('ar')">العربية</button>
+      <button onclick="switchLanguage('en')">English</button>
     </div>
   </div>
+  
+  <!-- زر واتساب ثابت للتواصل السريع -->
+  <a href="https://wa.me/966000000000" target="_blank" class="whatsapp-btn" title="تواصل عبر واتساب">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <script>
+    // عد تنازلي لإعادة الإطلاق
+    // تعديل التاريخ هنا حسب موعد إعادة الإطلاق (مثلاً: 1 يناير 2026)
+    const launchDate = new Date("Jan 1, 2026 00:00:00").getTime();
+    
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = launchDate - now;
+      
+      if(distance < 0) {
+        // انتهاء العد التنازلي
+        document.getElementById("countdown").innerHTML = "<p>تم إعادة إطلاق الموقع!</p>";
+        clearInterval(countdownInterval);
+        return;
+      }
+      
+      const days    = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      document.getElementById("days").innerText    = days.toString().padStart(2, '0');
+      document.getElementById("hours").innerText   = hours.toString().padStart(2, '0');
+      document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+      document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+    }
+    
+    const countdownInterval = setInterval(updateCountdown, 1000);
+    updateCountdown();
+    
+    // زر تغيير اللغة: في هذه الدالة يمكن تعديل محتويات الصفحة تبعًا للغة المختارة
+    function switchLanguage(lang) {
+      // مثال مبسط: يتم تغيير النصوص بحسب اللغة
+      // يمكنك توسيع الدالة لتغيير باقي المحتوى (العناوين، العبارات، ... إلخ)
+      if (lang === 'en') {
+        document.querySelector('h1').innerText = "Site Under Maintenance";
+        document.querySelector('p').innerText = "Hello! We are working on something great for you. Stay tuned for updates!";
+      } else {
+        document.querySelector('h1').innerText = "الموقع تحت التطوير والصيانة";
+        document.querySelector('p').innerText = "مرحباً! نحن نعمل على تطوير شيء رائع لكم. ترقبوا التحديثات قريباً!";
+      }
+    }
+  </script>
 </body>
 </html>
