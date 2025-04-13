@@ -1,102 +1,193 @@
-
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title> - ديـوان شموخ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الموقع تحت الصيانة - مهيلة ديوان الشموخ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        :root {
+            --primary-color: #2c786c;
+            --secondary-color: #ff9800;
+            --text-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            direction: rtl;
-            background-color: #f9f9f9;
+            font-family: 'Tajawal', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            padding: 1rem;
             text-align: center;
-            padding: 40px;
         }
-        .container {
-            max-width: 500px;
-            margin: auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+
+        .maintenance-container {
+            max-width: 800px;
+            padding: 3rem 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease;
         }
+
+        .logo {
+            width: 150px;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
+        }
+
+        .maintenance-icon {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            animation: bounce 2s infinite;
+        }
+
         h1 {
-            margin-bottom: 20px;
-            color: #2c3e50;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
         }
-        label {
-            display: block;
-            text-align: right;
-            margin: 15px 0 5px;
-            font-weight: bold;
+
+        p {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
         }
-        input, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
         }
-        button {
-            background-color: #27ae60;
+
+        .countdown-item {
+            background: var(--primary-color);
             color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            margin-top: 20px;
-            cursor: pointer;
+            padding: 1rem;
+            border-radius: 10px;
+            min-width: 100px;
         }
-        button:hover {
-            background-color: #219150;
+
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .social-links {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .social-link {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .countdown { gap: 1rem; }
+            .countdown-item { min-width: 80px; padding: 0.8rem; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>نموذج الحجز</h1>
-        <form id="bookingForm">
-            <label for="customer_name">الاسم:</label>
-            <input type="text" id="customer_name" name="customer_name" required>
+    <div class="maintenance-container">
+        <!-- يمكن استبدالها بشعار المؤسسة -->
+        <div class="maintenance-icon">
+            <i class="fas fa-tools"></i>
+        </div>
 
-            <label for="phone_number">رقم الجوال (+966):</label>
-            <input type="tel" id="phone_number" name="phone_number" pattern="^\+966\d{9}$" placeholder="+966XXXXXXXXX" required>
+        <h1>الموقع قيد التطوير والصيانة</h1>
+        
+        <p>
+            نعمل حالياً على تحسين تجربتكم بشكل أفضل.<br>
+            نعتذر للإزعاج وسنعود قريباً بإصدار أكثر تميزاً.<br>
+            يمكنكم متابعة آخر التحديثات عبر قنوات التواصل الاجتماعي.
+        </p>
 
-            <label for="session_type">نوع الجلسة:</label>
-            <select id="session_type" name="session_type" required>
-                <option value="large">كبيرة</option>
-                <option value="small">صغيرة</option>
-                <option value="vip">VIP</option>
-            </select>
-
-            <label for="session_number">رقم الجلسة:</label>
-            <input type="text" id="session_number" name="session_number" required>
-
-            <label for="branch">الفرع:</label>
-            <select id="branch" name="branch" required>
-                <option value="King Fahd">فرع الملك فهد</option>
-                <option value="Al Aziziyah">فرع العزيزية</option>
-            </select>
-
-            <label for="booking_date">تاريخ الحجز:</label>
-            <input type="date" id="booking_date" name="booking_date" required>
-
-            <label for="booking_time">الوقت:</label>
-            <input type="time" id="booking_time" name="booking_time" required>
-
-            <button type="submit">احجز الآن</button>
-        </form>
-        <p id="confirmationMessage" style="color: green; font-weight: bold; margin-top: 20px;"></p>
-    </div>
+        <div class="countdown" id="countdown">
+            <div class="countdown-item">
+                <div class="countdown-number" id="days">05</div>
+                <div>أيام</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="hours">12</div>
+                <div>ساعات</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="minutes">30</div>
+                <div>دقائق</div>
+            </div>
+        </div>
+<div class="social-links">
+    <a href="https://www.facebook.com/share/1Ue8tXybK9/" class="social-link" target="_blank">
+        <i class="fab fa-facebook"></i>
+        <span></span>
+    </a>
+    
+    <a href="https://www.instagram.com/mhyldywn?igsh=ZGFzcG1zOXFib2gw" class="social-link" target="_blank">
+        <i class="fab fa-instagram"></i>
+        <span></span>
+    </a>
+    
+    <a href="https://wa.me/966532989930" class="social-link" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        <span></span>
+    </a>
+</div>
 
     <script>
-        const form = document.getElementById('bookingForm');
-        const confirmation = document.getElementById('confirmationMessage');
+        // مؤتمر العد التنازلي (يمكن تعديل التاريخ)
+        const countDownDate = new Date("Jan 1, 2025 00:00:00").getTime();
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            confirmation.textContent = "تم إرسال طلب الحجز بنجاح! (ملاحظة: هذه نسخة تجريبية، لا يتم تخزين البيانات)";
-            form.reset();
-        });
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById('days').innerText = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+        }
+
+        // تحديث العد التنازلي كل ثانية
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // التشغيل الأولي
     </script>
 </body>
 </html>
