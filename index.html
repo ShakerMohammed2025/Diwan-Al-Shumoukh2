@@ -1,316 +1,216 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مشروعي المتكامل - شركة التقنية</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* أنماط CSS مخصصة */
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --light-color: #ecf0f1;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            background-color: var(--light-color);
-        }
-
-        /* شريط التنقل */
-        .navbar {
-            background-color: var(--primary-color);
-            padding: 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .navbar-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            color: white;
-            font-size: 1.5rem;
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--secondary-color);
-        }
-
-        /* قسم البطل */
-        .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.5), url('https://source.unsplash.com/random/1920x1080') center/cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            animation: slideIn 1s ease-out;
-        }
-
-        /* قسم الميزات */
-        .features {
-            padding: 5rem 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-
-        /* قسم المنتجات */
-        .products {
-            background-color: white;
-            padding: 5rem 1rem;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .product-card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .product-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        /* نموذج الاتصال */
-        .contact-section {
-            padding: 5rem 1rem;
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 0.8rem;
-            margin-top: 0.5rem;
-            border: none;
-            border-radius: 5px;
-        }
-
-        button {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #2980b9;
-        }
-
-        /* الرسوم المتحركة */
-        @keyframes slideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        /* تصميم متجاوب */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  <!-- ... باقي الأكواد السابقة تبقى كما هي ... -->
+  <style>
+    /* أضف هذه الأنماط الجديدة للدفع */
+    .payment-section {
+      margin: 20px 0;
+      border-top: 1px solid #eee;
+      padding-top: 20px;
+    }
+    
+    .payment-methods {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+    
+    .payment-method {
+      border: 2px solid #ddd;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .payment-method.active {
+      border-color: #006d5b;
+      background: #e8f0f9;
+    }
+    
+    .payment-form {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+      text-align: right;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family: 'Cairo', sans-serif;
+    }
+    
+    .card-icons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .card-icons img {
+      width: 40px;
+      opacity: 0.3;
+    }
+    
+    .card-icons img.active {
+      opacity: 1;
+    }
+    
+    #payButton {
+      background: #006d5b;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    
+    #payButton:hover {
+      background: #00b894;
+    }
+    
+    .error-message {
+      color: red;
+      font-size: 12px;
+      display: none;
+      margin-top: 5px;
+    }
+  </style>
 </head>
 <body>
-    <!-- شريط التنقل -->
-    <nav class="navbar">
-        <div class="navbar-content">
-            <a href="#" class="logo">التقنية</a>
-            <div class="nav-links">
-                <a href="#home">الرئيسية</a>
-                <a href="#features">الميزات</a>
-                <a href="#products">المنتجات</a>
-                <a href="#contact">اتصل بنا</a>
-            </div>
+  
+  <div class="container">
+    <!-- ... باقي الأكواد السابقة تبقى كما هي ... -->
+    
+    <!-- قسم الدفع الجديد -->
+    <div class="payment-section">
+      <h2>الدفع الإلكتروني</h2>
+      
+      <div class="payment-methods">
+        <div class="payment-method active" onclick="selectPayment('visa')">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" style="width: 60px;">
         </div>
-    </nav>
-
-    <!-- قسم البطل -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <h1>مرحبا بكم في مستقبل التقنية</h1>
-            <p>حلول مبتكرة لمتطلبات العصر الرقمي</p>
-            <button onclick="showDemo()">طلب عرض تجريبي</button>
+        <div class="payment-method" onclick="selectPayment('mada')">
+          <img src="https://mada.com.sa/assets/images/logo.svg" alt="Mada" style="width: 60px;">
         </div>
-    </section>
-
-    <!-- قسم الميزات -->
-    <section class="features" id="features">
-        <h2>ميزاتنا الرائعة</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <i class="fas fa-rocket fa-3x"></i>
-                <h3>أداء فائق</h3>
-                <p>أنظمة مبنية بأحدث التقنيات لتحقيق أفضل أداء</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-shield-alt fa-3x"></i>
-                <h3>حماية متكاملة</h3>
-                <p>أنظمة حماية متعددة الطبقات لحماية بياناتك</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-headset fa-3x"></i>
-                <h3>دعم فني 24/7</h3>
-                <p>فريق دعم فني متاح على مدار الساعة</p>
-            </div>
+      </div>
+      
+      <form class="payment-form" onsubmit="processPayment(event)">
+        <div class="form-group">
+          <label>رقم البطاقة</label>
+          <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+          <div class="error-message" id="cardError"></div>
         </div>
-    </section>
-
-    <!-- قسم المنتجات -->
-    <section class="products" id="products">
-        <h2>منتجاتنا</h2>
-        <div class="products-grid">
-            <div class="product-card">
-                <img src="https://source.unsplash.com/random/400x300" alt="منتج 1">
-                <div class="product-info">
-                    <h3>الحل البرمجي المتكامل</h3>
-                    <p>حلول برمجية متكاملة لإدارة الأعمال</p>
-                    <p class="price">$499</p>
-                    <button>شراء الآن</button>
-                </div>
-            </div>
-            <!-- إضافة المزيد من المنتجات هنا -->
+        
+        <div class="form-group">
+          <label>تاريخ الانتهاء</label>
+          <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5">
+          <div class="error-message" id="expiryError"></div>
         </div>
-    </section>
+        
+        <div class="form-group">
+          <label>CVV</label>
+          <input type="password" id="cvv" placeholder="123" maxlength="3">
+          <div class="error-message" id="cvvError"></div>
+        </div>
+        
+        <button type="submit" id="payButton">إتمام الدفع</button>
+      </form>
+    </div>
+    
+    <!-- ... باقي الأكواد السابقة تبقى كما هي ... -->
+  </div>
+  
+  <script>
+    // دالة اختيار طريقة الدفع
+    let selectedPayment = 'visa';
+    
+    function selectPayment(type) {
+      selectedPayment = type;
+      document.querySelectorAll('.payment-method').forEach(item => {
+        item.classList.remove('active');
+      });
+      event.currentTarget.classList.add('active');
+    }
 
-    <!-- قسم الاتصال -->
-    <section class="contact-section" id="contact">
-        <h2>تواصل معنا</h2>
-        <form class="contact-form" onsubmit="submitForm(event)">
-            <div class="form-group">
-                <label>الاسم الكامل:</label>
-                <input type="text" required>
-            </div>
-            <div class="form-group">
-                <label>البريد الإلكتروني:</label>
-                <input type="email" required>
-            </div>
-            <div class="form-group">
-                <label>الرسالة:</label>
-                <textarea rows="5" required></textarea>
-            </div>
-            <button type="submit">إرسال</button>
-        </form>
-    </section>
+    // دالة التحقق من البيانات
+    function validateInputs() {
+      let isValid = true;
+      const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+      const expiryDate = document.getElementById('expiryDate').value;
+      const cvv = document.getElementById('cvv').value;
 
-    <script>
-        // وظائف JavaScript
-        function showDemo() {
-            alert('شكرا لطلبك! سيتواصل معك فريقنا قريبا.');
-        }
+      // التحقق من رقم البطاقة
+      if (!/^\d{16}$/.test(cardNumber)) {
+        document.getElementById('cardError').textContent = 'رقم البطاقة غير صحيح';
+        document.getElementById('cardError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('cardError').style.display = 'none';
+      }
 
-        function submitForm(e) {
-            e.preventDefault();
-            alert('تم استلام رسالتك بنجاح!');
-            e.target.reset();
-        }
+      // التحقق من تاريخ الانتهاء
+      if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiryDate)) {
+        document.getElementById('expiryError').textContent = 'التاريخ غير صحيح';
+        document.getElementById('expiryError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('expiryError').style.display = 'none';
+      }
 
-        // إضافة تأثير التمرير السلس
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
+      // التحقق من CVV
+      if (!/^\d{3}$/.test(cvv)) {
+        document.getElementById('cvvError').textContent = 'CVV غير صحيح';
+        document.getElementById('cvvError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('cvvError').style.display = 'none';
+      }
 
-        // إضافة وظيفة القائمة المتنقلة
-        const navbar = document.querySelector('.navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                navbar.style.backgroundColor = 'rgba(44, 62, 80, 0.9)';
-            } else {
-                navbar.style.backgroundColor = var(--primary-color);
-            }
-        });
-    </script>
+      return isValid;
+    }
+
+    // دالة معالجة الدفع
+    function processPayment(event) {
+      event.preventDefault();
+      if (validateInputs()) {
+        // هنا يمكنك إضافة اتصال ببوابة الدفع الحقيقية
+        alert('جاري معالجة الدفع... (هذا نموذج تجريبي)');
+        // إعادة تعيين النموذج
+        event.target.reset();
+      }
+    }
+
+    // إضافة مسافات لرقم البطاقة تلقائيًا
+    document.getElementById('cardNumber').addEventListener('input', function(e) {
+      e.target.value = e.target.value.replace(/\D/g, '')
+        .replace(/(\d{4})/g, '$1 ')
+        .trim();
+    });
+
+    // تنسيق تاريخ الانتهاء تلقائيًا
+    document.getElementById('expiryDate').addEventListener('input', function(e) {
+      e.target.value = e.target.value
+        .replace(/\D/g, '')
+        .replace(/(\d{2})(\d)/, '$1/$2')
+        .substring(0, 5);
+    });
+  </script>
 </body>
 </html>
