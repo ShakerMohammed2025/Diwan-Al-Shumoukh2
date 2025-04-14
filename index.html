@@ -1,332 +1,248 @@
-<!-- الكود الكامل مع إضافة واجهة الدفع -->
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نظام حجز جلسات - مهيلة ديوان الشموخ</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ديوان الشموخ | Diwan Shomoukh</title>
   <style>
-    :root {
-      --primary-color: #2c786c;
-      --secondary-color: #ff9800;
-      --background: linear-gradient(135deg, rgba(248, 249, 250, 0.95) 0%, rgba(233, 236, 239, 0.95) 100%);
-    }
     body {
-      font-family: 'Tajawal', sans-serif;
-      direction: rtl;
       margin: 0;
-      min-height: 100vh;
-      background: var(--background), url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7') center/cover fixed;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f8f8;
+      color: #333;
     }
-    .main-container {
-      max-width: 800px;
-      margin: 2rem auto;
-      background: rgba(255, 255, 255, 0.98);
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-      padding: 2rem;
-    }
-    .header-section {
-      text-align: center;
-      padding: 2rem;
-      border-bottom: 3px solid var(--primary-color);
-      margin-bottom: 2rem;
-    }
-    .header-section h1 {
-      color: var(--primary-color);
-      font-size: 2.5rem;
-      margin: 0.5rem 0;
-    }
-    .booking-form, .payment-form {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      padding: 1rem;
-    }
-    .form-group {
-      position: relative;
-      margin-bottom: 1.5rem;
-    }
-    .form-group i {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #666;
-    }
-    .form-input {
-      width: 100%;
-      padding: 12px 45px 12px 20px;
-      border: 2px solid #ddd;
-      border-radius: 10px;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-    }
-    .form-input:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 15px rgba(44, 120, 108, 0.2);
-    }
-    .btn {
-      background: var(--primary-color);
-      color: white;
-      padding: 15px 30px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
-    }
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(44, 120, 108, 0.3);
-    }
-    .confirmation-section, .payment-section {
-      display: none;
-      padding: 2rem;
-      background: #f8f9fa;
-      border-radius: 15px;
-      margin-top: 2rem;
-      animation: fadeIn 0.5s ease;
-    }
-    .payment-options {
+    header {
+      background-color: #4a2c2a;
+      color: #fff;
+      padding: 15px;
       display: flex;
-      justify-content: space-around;
-      margin-top: 1rem;
+      justify-content: space-between;
+      align-items: center;
     }
-    .payment-option {
+    header h1 {
+      margin: 0;
+    }
+    nav {
+      display: flex;
+      gap: 15px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      padding: 20px;
+    }
+    section {
+      margin-bottom: 40px;
+    }
+    .booking, .menu, .login, .cart {
+      background-color: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    input, select, button {
+      padding: 10px;
+      margin-top: 10px;
+      width: 100%;
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: #4a2c2a;
+      color: white;
+      border: none;
+      border-radius: 6px;
       cursor: pointer;
-      text-align: center;
     }
-    .payment-option img {
-      width: 80px;
-      height: auto;
+    .lang-toggle {
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+      font-weight: bold;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @media (max-width: 768px) {
-      .main-container {
-        margin: 1rem;
-        padding: 1rem;
-      }
+    .item {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
     }
   </style>
 </head>
 <body>
-  <div class="main-container">
-    <header class="header-section">
-      <h1>مهيلة ديوان الشموخ</h1>
-      <h2>نظام الحجوزات الذكي</h2>
-    </header>
 
-    <form id="bookingForm" class="booking-form">
-      <div class="form-group">
-        <i class="fas fa-hashtag"></i>
-        <input type="text" id="sessionId" class="form-input" placeholder="رقم الجلسة" readonly>
-      </div>
-      <div class="form-group">
-        <i class="fas fa-couch"></i>
-        <select id="sessionType" class="form-input" required>
-          <option value="جلسة صغير">جلسة صغير</option>
-          <option value="جلسة كبيرة">جلسة كبيرة</option>
+  <header>
+    <h1 id="title">ديوان الشموخ</h1>
+    <nav>
+      <a href="#home" id="nav-home">الرئيسية</a>
+      <a href="#booking" id="nav-booking">الحجز</a>
+      <a href="#menu" id="nav-menu">القائمة</a>
+      <a href="#cart" id="nav-cart">الطلبات</a>
+      <a href="#login" id="nav-login">تسجيل الدخول</a>
+      <button class="lang-toggle" onclick="toggleLanguage()">English</button>
+    </nav>
+  </header>
+
+  <div class="container">
+
+    <!-- Home Section -->
+    <section id="home">
+      <h2 id="welcome-title">مرحبًا بكم في كوفي ديوان الشموخ</h2>
+      <p id="welcome-text">استمتع بأفضل الأجواء، المشروبات، والحلويات الشرقية.</p>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="booking">
+      <h2 id="booking-title">احجز جلستك</h2>
+      <form id="bookingForm">
+        <label id="session-type-label">نوع الجلسة</label>
+        <select id="session-type">
+          <option>كبير</option>
+          <option>صغير</option>
+          <option>VIP</option>
         </select>
-      </div>
-      <div class="form-group">
-        <i class="fas fa-user"></i>
-        <input type="text" id="clientName" class="form-input" placeholder="اسم العميل" required>
-      </div>
-      <div class="form-group">
-        <i class="fas fa-phone"></i>
-        <input type="tel" id="phone" class="form-input" placeholder="رقم الهاتف" required>
-      </div>
-      <div class="form-group">
-        <i class="fas fa-calendar-day"></i>
-        <input type="date" id="bookingDate" class="form-input" required>
-      </div>
-      <div class="form-group">
-        <i class="fas fa-clock"></i>
-        <input type="time" id="bookingTime" class="form-input" required>
-      </div>
-      <div class="form-group">
-        <i class="fas fa-tag"></i>
-        <input type="number" id="price" class="form-input" placeholder="السعر (ريال)" required>
-      </div>
-      <div class="form-group">
-        <i class="fas fa-money-bill-wave"></i>
-        <input type="number" id="paid" class="form-input" placeholder="المبلغ المدفوع (ريال)" required>
-      </div>
-      <button type="submit" class="btn">
-        <i class="fas fa-check-circle"></i>
-        تأكيد الحجز
-      </button>
-    </form>
 
-    <!-- قسم التأكيد -->
-    <section class="confirmation-section" id="confirmation">
-      <h2>تفاصيل الحجز</h2>
-      <div class="booking-details">
-        <p><strong>رقم الجلسة:</strong> <span id="confirmSessionId"></span></p>
-        <p><strong>نوع الجلسة:</strong> <span id="confirmSessionType"></span></p>
-        <p><strong>اسم العميل:</strong> <span id="confirmClientName"></span></p>
-        <p><strong>رقم الهاتف:</strong> <span id="confirmPhone"></span></p>
-        <p><strong>تاريخ الحجز:</strong> <span id="confirmBookingDate"></span></p>
-        <p><strong>وقت الحجز:</strong> <span id="confirmBookingTime"></span></p>
-        <p><strong>السعر:</strong> <span id="confirmPrice"></span> ريال</p>
-        <p><strong>المدفوع:</strong> <span id="confirmPaid"></span> ريال</p>
-        <p><strong>المتبقي:</strong> <span id="confirmRemaining"></span> ريال</p>
-      </div>
-      <button class="btn pdf-btn" onclick="generatePDF()">
-        <i class="fas fa-file-pdf"></i>
-        تحميل PDF
-      </button>
-      <a href="admin.html" class="btn" style="margin-top: 1rem;">
-        <i class="fas fa-cog"></i>
-        لوحة التحكم
-      </a>
+        <label id="name-label">الاسم الكامل</label>
+        <input type="text" id="full-name" required />
+
+        <label id="phone-label">رقم الجوال</label>
+        <input type="tel" id="phone" placeholder="+966" required />
+
+        <button type="submit" id="book-btn">احجز الآن</button>
+      </form>
+      <div id="booking-result"></div>
     </section>
 
-    <!-- قسم بوابة الدفع الذي يظهر بعد تأكيد الحجز -->
-    <section class="payment-section" id="paymentGateway">
-      <h2>إتمام عملية الدفع</h2>
-      <!-- يوضح للمستخدم اختيار وسيلة الدفع -->
-      <p>يرجى اختيار وسيلة الدفع للدفع بواسطة فيزا / مدى / ماستر كارد</p>
-      <div class="payment-options">
-        <!-- مثال لزر فيزا -->
-        <div class="payment-option" onclick="processPayment('visa')">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa">
-          <p>فيزا</p>
-        </div>
-        <!-- مثال لزر مدى -->
-        <div class="payment-option" onclick="processPayment('mada')">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Mada_Logo.svg" alt="Mada">
-          <p>مدى</p>
-        </div>
-        <!-- مثال لزر ماستر كارد -->
-        <div class="payment-option" onclick="processPayment('mastercard')">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard">
-          <p>ماستر كارد</p>
-        </div>
-      </div>
+    <!-- Menu Section -->
+    <section id="menu" class="menu">
+      <h2 id="menu-title">قائمة الطعام</h2>
+      <div class="item"><span>قهوة عربية</span><button onclick="addToCart('قهوة عربية')">أضف</button></div>
+      <div class="item"><span>شاي مغربي</span><button onclick="addToCart('شاي مغربي')">أضف</button></div>
+      <div class="item"><span>بسبوسة</span><button onclick="addToCart('بسبوسة')">أضف</button></div>
+      <div class="item"><span>كنافة</span><button onclick="addToCart('كنافة')">أضف</button></div>
     </section>
+
+    <!-- Cart Section -->
+    <section id="cart" class="cart">
+      <h2 id="cart-title">سلة الطلبات</h2>
+      <ul id="cart-list"></ul>
+      <button onclick="checkout()" id="checkout-btn">إرسال الطلب</button>
+    </section>
+
+    <!-- Login/Register Section -->
+    <section id="login" class="login">
+      <h2 id="login-title">تسجيل الدخول</h2>
+      <input type="text" placeholder="اسم المستخدم" id="username" />
+      <input type="password" placeholder="كلمة المرور" id="password" />
+      <button onclick="login()" id="login-btn">دخول</button>
+    </section>
+
   </div>
 
   <script>
-    // تكوين Firebase
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      databaseURL: "YOUR_DATABASE_URL",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
+    const translations = {
+      ar: {
+        title: "ديوان الشموخ",
+        "nav-home": "الرئيسية",
+        "nav-booking": "الحجز",
+        "nav-menu": "القائمة",
+        "nav-cart": "الطلبات",
+        "nav-login": "تسجيل الدخول",
+        "welcome-title": "مرحبًا بكم في كوفي ديوان الشموخ",
+        "welcome-text": "استمتع بأفضل الأجواء، المشروبات، والحلويات الشرقية.",
+        "booking-title": "احجز جلستك",
+        "session-type-label": "نوع الجلسة",
+        "name-label": "الاسم الكامل",
+        "phone-label": "رقم الجوال",
+        "book-btn": "احجز الآن",
+        "menu-title": "قائمة الطعام",
+        "cart-title": "سلة الطلبات",
+        "checkout-btn": "إرسال الطلب",
+        "login-title": "تسجيل الدخول",
+        "login-btn": "دخول"
+      },
+      en: {
+        title: "Diwan Shomoukh",
+        "nav-home": "Home",
+        "nav-booking": "Booking",
+        "nav-menu": "Menu",
+        "nav-cart": "Cart",
+        "nav-login": "Login",
+        "welcome-title": "Welcome to Diwan Shomoukh Café",
+        "welcome-text": "Enjoy the best atmosphere, drinks, and oriental sweets.",
+        "booking-title": "Book Your Session",
+        "session-type-label": "Session Type",
+        "name-label": "Full Name",
+        "phone-label": "Phone Number",
+        "book-btn": "Book Now",
+        "menu-title": "Menu",
+        "cart-title": "Cart",
+        "checkout-btn": "Submit Order",
+        "login-title": "Login",
+        "login-btn": "Login"
+      }
     };
 
-    // تهيئة Firebase
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
+    let currentLang = 'ar';
 
-    // توليد رقم جلسة فريد
-    function generateSessionId() {
-      return `SID-${Date.now().toString(36).toUpperCase()}`;
-    }
-    document.getElementById('sessionId').value = generateSessionId();
+    function toggleLanguage() {
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      document.documentElement.lang = currentLang;
+      document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+      document.querySelector(".lang-toggle").textContent = currentLang === 'ar' ? 'English' : 'عربي';
 
-    // معالجة تسجيل النموذج
-    document.getElementById('bookingForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const bookingData = {
-        sessionId: document.getElementById('sessionId').value,
-        sessionType: document.getElementById('sessionType').value,
-        clientName: document.getElementById('clientName').value.trim(),
-        phone: document.getElementById('phone').value.trim(),
-        bookingDate: document.getElementById('bookingDate').value,
-        bookingTime: document.getElementById('bookingTime').value,
-        price: parseFloat(document.getElementById('price').value),
-        paid: parseFloat(document.getElementById('paid').value),
-        timestamp: firebase.database.ServerValue.TIMESTAMP
-      };
-
-      try {
-        // حفظ البيانات في Firebase
-        await database.ref('bookings/' + bookingData.sessionId).set(bookingData);
-        showConfirmation(bookingData);
-      } catch (error) {
-        showError('حدث خطأ في حفظ البيانات');
+      for (let id in translations[currentLang]) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = translations[currentLang][id];
       }
+    }
+
+    // Booking Logic
+    document.getElementById("bookingForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("full-name").value;
+      const phone = document.getElementById("phone").value;
+      const session = document.getElementById("session-type").value;
+
+      document.getElementById("booking-result").textContent =
+        currentLang === 'ar'
+          ? `تم حجز جلسة ${session} باسم ${name}، سنقوم بالتواصل عبر الرقم: ${phone}`
+          : `Session ${session} booked for ${name}. We will contact you at: ${phone}`;
     });
 
-    // إظهار تفاصيل التأكيد
-    function showConfirmation(data) {
-      document.getElementById('confirmSessionId').textContent = data.sessionId;
-      document.getElementById('confirmSessionType').textContent = data.sessionType;
-      document.getElementById('confirmClientName').textContent = data.clientName;
-      document.getElementById('confirmPhone').textContent = data.phone;
-      document.getElementById('confirmBookingDate').textContent = data.bookingDate;
-      document.getElementById('confirmBookingTime').textContent = data.bookingTime;
-      document.getElementById('confirmPrice').textContent = data.price.toFixed(2);
-      document.getElementById('confirmPaid').textContent = data.paid.toFixed(2);
-      document.getElementById('confirmRemaining').textContent = (data.price - data.paid).toFixed(2);
-
-      document.getElementById('bookingForm').style.display = 'none';
-      document.getElementById('confirmation').style.display = 'block';
-
-      // يمكن هنا عرض واجهة الدفع بعد تأكيد الحجز
-      document.getElementById('paymentGateway').style.display = 'block';
+    // Cart logic
+    const cart = [];
+    function addToCart(item) {
+      cart.push(item);
+      renderCart();
     }
-
-    // دالة توليد ملف PDF (كما هو موجود في الكود الأصلي)
-    async function generatePDF() {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.setFontSize(18);
-      doc.text('تأكيد الحجز - مهيلة ديوان الشموخ', 15, 20);
-      const details = [
-        `رقم الجلسة: ${document.getElementById('confirmSessionId').textContent}`,
-        `نوع الجلسة: ${document.getElementById('confirmSessionType').textContent}`,
-        `اسم العميل: ${document.getElementById('confirmClientName').textContent}`,
-        `رقم الهاتف: ${document.getElementById('confirmPhone').textContent}`,
-        `التاريخ: ${document.getElementById('confirmBookingDate').textContent}`,
-        `الوقت: ${document.getElementById('confirmBookingTime').textContent}`,
-        `السعر: ${document.getElementById('confirmPrice').textContent} ريال`,
-        `المدفوع: ${document.getElementById('confirmPaid').textContent} ريال`,
-        `المتبقي: ${document.getElementById('confirmRemaining').textContent} ريال`
-      ];
-      details.forEach((text, index) => {
-        doc.text(text, 15, 40 + (index * 10));
+    function renderCart() {
+      const list = document.getElementById("cart-list");
+      list.innerHTML = "";
+      cart.forEach((item, i) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        list.appendChild(li);
       });
-      const pdfBlob = doc.output('blob');
-      const pdfUrl = URL.createObjectURL(pdfBlob);
-      const link = document.createElement('a');
-      link.href = pdfUrl;
-      link.download = `حجز_${document.getElementById('confirmSessionId').textContent}.pdf`;
-      link.click();
-      // مثال إعادة توجيه المستخدم لمحادثة على الواتساب بعد توليد الملف
-      const phone = document.getElementById('confirmPhone').textContent.replace(/^0/, '966');
-      window.open(`https://wa.me/${phone}?text=مرحباً، تم تأكيد حجزك بنجاح`, '_blank');
+    }
+    function checkout() {
+      alert(currentLang === 'ar' ? "تم إرسال طلبك بنجاح!" : "Your order has been submitted!");
+      cart.length = 0;
+      renderCart();
     }
 
-    // دالة محاكاة عملية الدفع
-    function processPayment(method) {
-      // ستحتاج إلى دمج بوابة الدفع الفعلية بناءً على وثائق كل مزود
-      // هنا مثال للتنبيه بمعيار الدفع الذي تم اختياره للمستخدم
-      alert(`تم اختيار الدفع بواسطة ${method.toUpperCase()}.\nسيتم توجيهك لصفحة الدفع الخاصة بالمزود...`);
-
-      // مثال على إعادة التوجيه لصفحة الدفع:
-      // window.location.href = 'https://your-payment-provider.com/pay?method=' + method;
-
-      // في حالة دمج بوابة الدفع مباشرة يمكنك استدعاء الدالة الخاصة بمزود الخدمة
-    }
-
-    // دالة عرض رسالة الخطأ
-    function showError(message) {
-      alert(message);
+    // Login Logic
+    function login() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+      alert(
+        currentLang === 'ar'
+          ? `مرحبًا ${user}، تم تسجيل الدخول.`
+          : `Welcome ${user}, you are logged in.`
+      );
     }
   </script>
 </body>
-  </html>
+</html>
