@@ -1,300 +1,332 @@
+<!-- الكود الكامل مع إضافة واجهة الدفع -->
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>الموقع تحت التطوير والصيانة</title>
-  
-  <!-- تضمين أيقونات Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  
-  <!-- تضمين خط من Google -->
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-  
-  <!-- تضمين مكتبة Lottie Player -->
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" defer></script>
-  
+  <title>نظام حجز جلسات - مهيلة ديوان الشموخ</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --primary-color: #2c786c;
+      --secondary-color: #ff9800;
+      --background: linear-gradient(135deg, rgba(248, 249, 250, 0.95) 0%, rgba(233, 236, 239, 0.95) 100%);
     }
-    
     body {
-      font-family: 'Cairo', sans-serif;
-      background: linear-gradient(to bottom, #e8f0f9, #f5f9fc);
-      display: flex;
-      flex-direction: column;
+      font-family: 'Tajawal', sans-serif;
+      direction: rtl;
+      margin: 0;
       min-height: 100vh;
+      background: var(--background), url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7') center/cover fixed;
     }
-    
-    .container {
-      background-color: #fff;
-      max-width: 500px;
-      width: 90%;
-      margin: 30px auto;
-      padding: 30px;
+    .main-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: rgba(255, 255, 255, 0.98);
       border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      padding: 2rem;
+    }
+    .header-section {
+      text-align: center;
+      padding: 2rem;
+      border-bottom: 3px solid var(--primary-color);
+      margin-bottom: 2rem;
+    }
+    .header-section h1 {
+      color: var(--primary-color);
+      font-size: 2.5rem;
+      margin: 0.5rem 0;
+    }
+    .booking-form, .payment-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      padding: 1rem;
+    }
+    .form-group {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+    .form-group i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+    }
+    .form-input {
+      width: 100%;
+      padding: 12px 45px 12px 20px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    .form-input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 15px rgba(44, 120, 108, 0.2);
+    }
+    .btn {
+      background: var(--primary-color);
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(44, 120, 108, 0.3);
+    }
+    .confirmation-section, .payment-section {
+      display: none;
+      padding: 2rem;
+      background: #f8f9fa;
+      border-radius: 15px;
+      margin-top: 2rem;
+      animation: fadeIn 0.5s ease;
+    }
+    .payment-options {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 1rem;
+    }
+    .payment-option {
+      cursor: pointer;
       text-align: center;
     }
-    
-    .brand-logo {
-      font-size: 28px;
-      font-weight: 700;
-      color: #006d5b;
-      margin-bottom: 10px;
+    .payment-option img {
+      width: 80px;
+      height: auto;
     }
-    
-    /* التعديل: إضافة display: block للرسوم المتحركة */
-    .animation {
-      width: 200px;
-      height: 200px;
-      margin: 0 auto 20px;
-      display: block;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    
-    h1 {
-      font-size: 24px;
-      color: #006d5b;
-      margin-bottom: 15px;
-    }
-    
-    p {
-      font-size: 16px;
-      color: #333;
-      line-height: 1.6;
-      margin-bottom: 15px;
-    }
-    
-    .countdown {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-    
-    .countdown-item {
-      background: #006d5b;
-      padding: 10px 15px;
-      border-radius: 8px;
-      color: #fff;
-      min-width: 60px;
-    }
-    
-    .countdown-number {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-    
-    .countdown-label {
-      font-size: 12px;
-    }
-    
-    .subscription {
-      margin-bottom: 20px;
-    }
-    
-    .subscription input[type="email"] {
-      padding: 10px;
-      width: 70%;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      margin-right: 5px;
-      outline: none;
-      font-size: 14px;
-    }
-    
-    .subscription button {
-      padding: 10px 15px;
-      border: none;
-      background: #006d5b;
-      color: #fff;
-      font-size: 14px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    
-    .subscription button:hover {
-      background: #00b894;
-    }
-    
-    .social-icons {
-      margin-bottom: 20px;
-    }
-    
-    .social-icons a {
-      font-size: 22px;
-      color: #006d5b;
-      margin: 0 10px;
-      transition: transform 0.3s, color 0.3s;
-    }
-    
-    .social-icons a:hover {
-      color: #00b894;
-      transform: scale(1.2);
-    }
-    
-    .language-switch {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    
-    .language-switch button {
-      border: 1px solid #006d5b;
-      background: transparent;
-      color: #006d5b;
-      padding: 5px 10px;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background 0.3s, color 0.3s;
-    }
-    
-    .language-switch button:hover {
-      background: #006d5b;
-      color: #fff;
-    }
-    
-    .whatsapp-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #25d366;
-      color: #fff;
-      width: 55px;
-      height: 55px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      font-size: 28px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      transition: transform 0.3s;
-      z-index: 1000;
-    }
-    
-    .whatsapp-btn:hover {
-      transform: scale(1.1);
-    }
-    
-    @media(max-width: 600px) {
-      .container {
-        padding: 20px;
-      }
-      .countdown-item {
-        padding: 8px 10px;
-        min-width: 50px;
+    @media (max-width: 768px) {
+      .main-container {
+        margin: 1rem;
+        padding: 1rem;
       }
     }
   </style>
 </head>
 <body>
-  
-  <div class="container">
-    <div class="brand-logo">شعار العلامة التجارية</div>
-    
-    <!-- الرسوم المتحركة مع رابط بديل -->
-    <lottie-player class="animation" 
-      src="https://assets5.lottiefiles.com/packages/lf20_soCRuE.json"  
-      background="transparent"  
-      speed="1"  
-      loop  
-      autoplay>
-    </lottie-player>
-    
-    <h1>الموقع تحت التطوير والصيانة</h1>
-    <p>مرحباً! نحن نعمل على تطوير شيء رائع لكم. ترقبوا التحديثات قريباً!</p>
-    
-    <div class="countdown" id="countdown">
-      <div class="countdown-item">
-        <div class="countdown-number" id="days">00</div>
-        <div class="countdown-label">أيام</div>
+  <div class="main-container">
+    <header class="header-section">
+      <h1>مهيلة ديوان الشموخ</h1>
+      <h2>نظام الحجوزات الذكي</h2>
+    </header>
+
+    <form id="bookingForm" class="booking-form">
+      <div class="form-group">
+        <i class="fas fa-hashtag"></i>
+        <input type="text" id="sessionId" class="form-input" placeholder="رقم الجلسة" readonly>
       </div>
-      <div class="countdown-item">
-        <div class="countdown-number" id="hours">00</div>
-        <div class="countdown-label">ساعات</div>
+      <div class="form-group">
+        <i class="fas fa-couch"></i>
+        <select id="sessionType" class="form-input" required>
+          <option value="جلسة صغير">جلسة صغير</option>
+          <option value="جلسة كبيرة">جلسة كبيرة</option>
+        </select>
       </div>
-      <div class="countdown-item">
-        <div class="countdown-number" id="minutes">00</div>
-        <div class="countdown-label">دقائق</div>
+      <div class="form-group">
+        <i class="fas fa-user"></i>
+        <input type="text" id="clientName" class="form-input" placeholder="اسم العميل" required>
       </div>
-      <div class="countdown-item">
-        <div class="countdown-number" id="seconds">00</div>
-        <div class="countdown-label">ثواني</div>
+      <div class="form-group">
+        <i class="fas fa-phone"></i>
+        <input type="tel" id="phone" class="form-input" placeholder="رقم الهاتف" required>
       </div>
-    </div>
-    
-    <div class="subscription">
-      <input type="email" placeholder="أدخل بريدك الإلكتروني" />
-      <button type="submit">اشتراك</button>
-    </div>
-    
-    <!-- تحديث: إضافة الروابط الفعلية للتواصل -->
-    <div class="social-icons">
-      <a href="https://www.facebook.com/share/192s7S9hfB/" target="_blank" title="فيسبوك">
-        <i class="fab fa-facebook-f"></i>
+      <div class="form-group">
+        <i class="fas fa-calendar-day"></i>
+        <input type="date" id="bookingDate" class="form-input" required>
+      </div>
+      <div class="form-group">
+        <i class="fas fa-clock"></i>
+        <input type="time" id="bookingTime" class="form-input" required>
+      </div>
+      <div class="form-group">
+        <i class="fas fa-tag"></i>
+        <input type="number" id="price" class="form-input" placeholder="السعر (ريال)" required>
+      </div>
+      <div class="form-group">
+        <i class="fas fa-money-bill-wave"></i>
+        <input type="number" id="paid" class="form-input" placeholder="المبلغ المدفوع (ريال)" required>
+      </div>
+      <button type="submit" class="btn">
+        <i class="fas fa-check-circle"></i>
+        تأكيد الحجز
+      </button>
+    </form>
+
+    <!-- قسم التأكيد -->
+    <section class="confirmation-section" id="confirmation">
+      <h2>تفاصيل الحجز</h2>
+      <div class="booking-details">
+        <p><strong>رقم الجلسة:</strong> <span id="confirmSessionId"></span></p>
+        <p><strong>نوع الجلسة:</strong> <span id="confirmSessionType"></span></p>
+        <p><strong>اسم العميل:</strong> <span id="confirmClientName"></span></p>
+        <p><strong>رقم الهاتف:</strong> <span id="confirmPhone"></span></p>
+        <p><strong>تاريخ الحجز:</strong> <span id="confirmBookingDate"></span></p>
+        <p><strong>وقت الحجز:</strong> <span id="confirmBookingTime"></span></p>
+        <p><strong>السعر:</strong> <span id="confirmPrice"></span> ريال</p>
+        <p><strong>المدفوع:</strong> <span id="confirmPaid"></span> ريال</p>
+        <p><strong>المتبقي:</strong> <span id="confirmRemaining"></span> ريال</p>
+      </div>
+      <button class="btn pdf-btn" onclick="generatePDF()">
+        <i class="fas fa-file-pdf"></i>
+        تحميل PDF
+      </button>
+      <a href="admin.html" class="btn" style="margin-top: 1rem;">
+        <i class="fas fa-cog"></i>
+        لوحة التحكم
       </a>
-      <a href="https://www.instagram.com/mhyldywn?igsh=ZGFzcG1zOXFib2gw" target="_blank" title="إنستقرام">
-        <i class="fab fa-instagram"></i>
-      </a>
-      <a href="https://wa.me/966532989930" target="_blank" title="واتساب">
-        <i class="fab fa-whatsapp"></i>
-      </a>
-    </div>
-    
-    <div class="language-switch">
-      <button onclick="switchLanguage('ar')">العربية</button>
-      <button onclick="switchLanguage('en')">English</button>
-    </div>
+    </section>
+
+    <!-- قسم بوابة الدفع الذي يظهر بعد تأكيد الحجز -->
+    <section class="payment-section" id="paymentGateway">
+      <h2>إتمام عملية الدفع</h2>
+      <!-- يوضح للمستخدم اختيار وسيلة الدفع -->
+      <p>يرجى اختيار وسيلة الدفع للدفع بواسطة فيزا / مدى / ماستر كارد</p>
+      <div class="payment-options">
+        <!-- مثال لزر فيزا -->
+        <div class="payment-option" onclick="processPayment('visa')">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa">
+          <p>فيزا</p>
+        </div>
+        <!-- مثال لزر مدى -->
+        <div class="payment-option" onclick="processPayment('mada')">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Mada_Logo.svg" alt="Mada">
+          <p>مدى</p>
+        </div>
+        <!-- مثال لزر ماستر كارد -->
+        <div class="payment-option" onclick="processPayment('mastercard')">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard">
+          <p>ماستر كارد</p>
+        </div>
+      </div>
+    </section>
   </div>
-  
-  <!-- تحديث رقم واتساب -->
-  <a href="https://wa.me/966532989930" target="_blank" class="whatsapp-btn" title="تواصل عبر واتساب">
-    <i class="fab fa-whatsapp"></i>
-  </a>
-  
+
   <script>
-    const launchDate = new Date("Jan 1, 2026 00:00:00").getTime();
-    
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = launchDate - now;
-      
-      if(distance < 0) {
-        document.getElementById("countdown").innerHTML = "<p>تم إعادة إطلاق الموقع!</p>";
-        clearInterval(countdownInterval);
-        return;
-      }
-      
-      const days    = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      
-      document.getElementById("days").innerText    = days.toString().padStart(2, '0');
-      document.getElementById("hours").innerText   = hours.toString().padStart(2, '0');
-      document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
-      document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+    // تكوين Firebase
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      databaseURL: "YOUR_DATABASE_URL",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // تهيئة Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // توليد رقم جلسة فريد
+    function generateSessionId() {
+      return `SID-${Date.now().toString(36).toUpperCase()}`;
     }
-    
-    const countdownInterval = setInterval(updateCountdown, 1000);
-    updateCountdown();
-    
-    function switchLanguage(lang) {
-      if (lang === 'en') {
-        document.querySelector('h1').innerText = "Site Under Maintenance";
-        document.querySelector('p').innerText = "Hello! We are working on something great for you. Stay tuned for updates!";
-      } else {
-        document.querySelector('h1').innerText = "الموقع تحت التطوير والصيانة";
-        document.querySelector('p').innerText = "مرحباً! نحن نعمل على تطوير شيء رائع لكم. ترقبوا التحديثات قريباً!";
+    document.getElementById('sessionId').value = generateSessionId();
+
+    // معالجة تسجيل النموذج
+    document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const bookingData = {
+        sessionId: document.getElementById('sessionId').value,
+        sessionType: document.getElementById('sessionType').value,
+        clientName: document.getElementById('clientName').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        bookingDate: document.getElementById('bookingDate').value,
+        bookingTime: document.getElementById('bookingTime').value,
+        price: parseFloat(document.getElementById('price').value),
+        paid: parseFloat(document.getElementById('paid').value),
+        timestamp: firebase.database.ServerValue.TIMESTAMP
+      };
+
+      try {
+        // حفظ البيانات في Firebase
+        await database.ref('bookings/' + bookingData.sessionId).set(bookingData);
+        showConfirmation(bookingData);
+      } catch (error) {
+        showError('حدث خطأ في حفظ البيانات');
       }
+    });
+
+    // إظهار تفاصيل التأكيد
+    function showConfirmation(data) {
+      document.getElementById('confirmSessionId').textContent = data.sessionId;
+      document.getElementById('confirmSessionType').textContent = data.sessionType;
+      document.getElementById('confirmClientName').textContent = data.clientName;
+      document.getElementById('confirmPhone').textContent = data.phone;
+      document.getElementById('confirmBookingDate').textContent = data.bookingDate;
+      document.getElementById('confirmBookingTime').textContent = data.bookingTime;
+      document.getElementById('confirmPrice').textContent = data.price.toFixed(2);
+      document.getElementById('confirmPaid').textContent = data.paid.toFixed(2);
+      document.getElementById('confirmRemaining').textContent = (data.price - data.paid).toFixed(2);
+
+      document.getElementById('bookingForm').style.display = 'none';
+      document.getElementById('confirmation').style.display = 'block';
+
+      // يمكن هنا عرض واجهة الدفع بعد تأكيد الحجز
+      document.getElementById('paymentGateway').style.display = 'block';
+    }
+
+    // دالة توليد ملف PDF (كما هو موجود في الكود الأصلي)
+    async function generatePDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFontSize(18);
+      doc.text('تأكيد الحجز - مهيلة ديوان الشموخ', 15, 20);
+      const details = [
+        `رقم الجلسة: ${document.getElementById('confirmSessionId').textContent}`,
+        `نوع الجلسة: ${document.getElementById('confirmSessionType').textContent}`,
+        `اسم العميل: ${document.getElementById('confirmClientName').textContent}`,
+        `رقم الهاتف: ${document.getElementById('confirmPhone').textContent}`,
+        `التاريخ: ${document.getElementById('confirmBookingDate').textContent}`,
+        `الوقت: ${document.getElementById('confirmBookingTime').textContent}`,
+        `السعر: ${document.getElementById('confirmPrice').textContent} ريال`,
+        `المدفوع: ${document.getElementById('confirmPaid').textContent} ريال`,
+        `المتبقي: ${document.getElementById('confirmRemaining').textContent} ريال`
+      ];
+      details.forEach((text, index) => {
+        doc.text(text, 15, 40 + (index * 10));
+      });
+      const pdfBlob = doc.output('blob');
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+      const link = document.createElement('a');
+      link.href = pdfUrl;
+      link.download = `حجز_${document.getElementById('confirmSessionId').textContent}.pdf`;
+      link.click();
+      // مثال إعادة توجيه المستخدم لمحادثة على الواتساب بعد توليد الملف
+      const phone = document.getElementById('confirmPhone').textContent.replace(/^0/, '966');
+      window.open(`https://wa.me/${phone}?text=مرحباً، تم تأكيد حجزك بنجاح`, '_blank');
+    }
+
+    // دالة محاكاة عملية الدفع
+    function processPayment(method) {
+      // ستحتاج إلى دمج بوابة الدفع الفعلية بناءً على وثائق كل مزود
+      // هنا مثال للتنبيه بمعيار الدفع الذي تم اختياره للمستخدم
+      alert(`تم اختيار الدفع بواسطة ${method.toUpperCase()}.\nسيتم توجيهك لصفحة الدفع الخاصة بالمزود...`);
+
+      // مثال على إعادة التوجيه لصفحة الدفع:
+      // window.location.href = 'https://your-payment-provider.com/pay?method=' + method;
+
+      // في حالة دمج بوابة الدفع مباشرة يمكنك استدعاء الدالة الخاصة بمزود الخدمة
+    }
+
+    // دالة عرض رسالة الخطأ
+    function showError(message) {
+      alert(message);
     }
   </script>
 </body>
-</html>
+  </html>
