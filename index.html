@@ -1,114 +1,316 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تطبيق الحجز المتكامل - Diwan Shomoukh</title>
-  <style>
-    body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; direction: rtl; }
-    header, footer { background: #2b4c7e; color: white; text-align: center; padding: 1rem; }
-    nav { background: #4d6fa4; display: flex; justify-content: space-around; padding: 1rem; }
-    nav a { color: white; text-decoration: none; font-weight: bold; }
-    section { padding: 2rem; background-color: white; margin: 1rem; border-radius: 8px; }
-    h2 { color: #2b4c7e; }
-    .session { padding: 1rem; border: 1px solid #ccc; margin: 0.5rem 0; border-radius: 5px; }
-    .available { background: #dff0d8; }
-    .booked { background: #f2dede; }
-    label, input, select, textarea { display: block; width: 100%; margin: 0.5rem 0; }
-    button { background: #2b4c7e; color: white; padding: 0.5rem 1rem; border: none; cursor: pointer; border-radius: 4px; }
-    .stars { display: flex; direction: ltr; justify-content: flex-start; }
-    .stars input { display: none; }
-    .stars label { font-size: 2rem; color: gray; cursor: pointer; }
-    .stars input:checked ~ label, .stars label:hover, .stars label:hover ~ label { color: gold; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشروعي المتكامل - شركة التقنية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* أنماط CSS مخصصة */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --light-color: #ecf0f1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: var(--light-color);
+        }
+
+        /* شريط التنقل */
+        .navbar {
+            background-color: var(--primary-color);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* قسم البطل */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), url('https://source.unsplash.com/random/1920x1080') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: slideIn 1s ease-out;
+        }
+
+        /* قسم الميزات */
+        .features {
+            padding: 5rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        /* قسم المنتجات */
+        .products {
+            background-color: white;
+            padding: 5rem 1rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* نموذج الاتصال */
+        .contact-section {
+            padding: 5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-top: 0.5rem;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* الرسوم المتحركة */
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* تصميم متجاوب */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Diwan Shomoukh - نظام الحجز</h1>
-  </header>
+    <!-- شريط التنقل -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="#" class="logo">التقنية</a>
+            <div class="nav-links">
+                <a href="#home">الرئيسية</a>
+                <a href="#features">الميزات</a>
+                <a href="#products">المنتجات</a>
+                <a href="#contact">اتصل بنا</a>
+            </div>
+        </div>
+    </nav>
 
-  <nav>
-    <a href="#booking">الحجز</a>
-    <a href="#branches">الفروع</a>
-    <a href="#status">حالة الجلسات</a>
-    <a href="#review">تقييم العملاء</a>
-    <a href="#payment">بوابة الدفع</a>
-  </nav>
+    <!-- قسم البطل -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>مرحبا بكم في مستقبل التقنية</h1>
+            <p>حلول مبتكرة لمتطلبات العصر الرقمي</p>
+            <button onclick="showDemo()">طلب عرض تجريبي</button>
+        </div>
+    </section>
 
-  <section id="booking">
-    <h2>نموذج الحجز</h2>
-    <form>
-      <label>الاسم الأول:</label>
-      <input type="text" required>
-      <label>اسم العائلة:</label>
-      <input type="text" required>
-      <label>رقم الجوال (+966):</label>
-      <input type="tel" required pattern="\+966[0-9]{9}">
-      <label>نوع الجلسة:</label>
-      <select>
-        <option>كبير</option>
-        <option>صغير</option>
-        <option>VIP</option>
-      </select>
-      <label>التاريخ والوقت:</label>
-      <input type="datetime-local" required>
-      <button type="submit">احجز الآن</button>
-    </form>
-  </section>
+    <!-- قسم الميزات -->
+    <section class="features" id="features">
+        <h2>ميزاتنا الرائعة</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-rocket fa-3x"></i>
+                <h3>أداء فائق</h3>
+                <p>أنظمة مبنية بأحدث التقنيات لتحقيق أفضل أداء</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-alt fa-3x"></i>
+                <h3>حماية متكاملة</h3>
+                <p>أنظمة حماية متعددة الطبقات لحماية بياناتك</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-headset fa-3x"></i>
+                <h3>دعم فني 24/7</h3>
+                <p>فريق دعم فني متاح على مدار الساعة</p>
+            </div>
+        </div>
+    </section>
 
-  <section id="branches">
-    <h2>فروعنا</h2>
-    <ul>
-      <li><strong>فرع الملك فهد:</strong> الرياض - طريق الملك فهد، أوقات العمل: 4 مساءً - 2 صباحًا</li>
-      <li><strong>فرع العزيزية:</strong> الرياض - حي العزيزية، أوقات العمل: 4 مساءً - 1 صباحًا</li>
-    </ul>
-  </section>
+    <!-- قسم المنتجات -->
+    <section class="products" id="products">
+        <h2>منتجاتنا</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <img src="https://source.unsplash.com/random/400x300" alt="منتج 1">
+                <div class="product-info">
+                    <h3>الحل البرمجي المتكامل</h3>
+                    <p>حلول برمجية متكاملة لإدارة الأعمال</p>
+                    <p class="price">$499</p>
+                    <button>شراء الآن</button>
+                </div>
+            </div>
+            <!-- إضافة المزيد من المنتجات هنا -->
+        </div>
+    </section>
 
-  <section id="status">
-    <h2>حالة الجلسات</h2>
-    <div class="session available">جلسة 1 - متوفرة</div>
-    <div class="session booked">جلسة 2 - محجوزة</div>
-    <div class="session available">جلسة 3 - متوفرة</div>
-    <div class="session booked">جلسة 4 - محجوزة</div>
-  </section>
+    <!-- قسم الاتصال -->
+    <section class="contact-section" id="contact">
+        <h2>تواصل معنا</h2>
+        <form class="contact-form" onsubmit="submitForm(event)">
+            <div class="form-group">
+                <label>الاسم الكامل:</label>
+                <input type="text" required>
+            </div>
+            <div class="form-group">
+                <label>البريد الإلكتروني:</label>
+                <input type="email" required>
+            </div>
+            <div class="form-group">
+                <label>الرسالة:</label>
+                <textarea rows="5" required></textarea>
+            </div>
+            <button type="submit">إرسال</button>
+        </form>
+    </section>
 
-  <section id="review">
-    <h2>تقييم العملاء</h2>
-    <form>
-      <label>الاسم:</label>
-      <input type="text">
-      <label>رأيك:</label>
-      <textarea rows="4"></textarea>
-      <label>التقييم:</label>
-      <div class="stars">
-        <input type="radio" id="star5" name="rate" value="5"><label for="star5">★</label>
-        <input type="radio" id="star4" name="rate" value="4"><label for="star4">★</label>
-        <input type="radio" id="star3" name="rate" value="3"><label for="star3">★</label>
-        <input type="radio" id="star2" name="rate" value="2"><label for="star2">★</label>
-        <input type="radio" id="star1" name="rate" value="1"><label for="star1">★</label>
-      </div>
-      <button type="submit">إرسال التقييم</button>
-    </form>
-  </section>
+    <script>
+        // وظائف JavaScript
+        function showDemo() {
+            alert('شكرا لطلبك! سيتواصل معك فريقنا قريبا.');
+        }
 
-  <section id="payment">
-    <h2>بوابة الدفع</h2>
-    <form>
-      <label>اسم صاحب البطاقة:</label>
-      <input type="text" required>
-      <label>رقم البطاقة (فيزا / مدى):</label>
-      <input type="text" placeholder="0000 1111 2222 3333" required>
-      <label>تاريخ الانتهاء:</label>
-      <input type="month" required>
-      <label>CVV:</label>
-      <input type="number" required>
-      <button type="submit">ادفع الآن</button>
-    </form>
-  </section>
+        function submitForm(e) {
+            e.preventDefault();
+            alert('تم استلام رسالتك بنجاح!');
+            e.target.reset();
+        }
 
-  <footer>
-    <p>Diwan Shomoukh &copy; 2025 - جميع الحقوق محفوظة</p>
-  </footer>
+        // إضافة تأثير التمرير السلس
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
 
+        // إضافة وظيفة القائمة المتنقلة
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.style.backgroundColor = 'rgba(44, 62, 80, 0.9)';
+            } else {
+                navbar.style.backgroundColor = var(--primary-color);
+            }
+        });
+    </script>
 </body>
 </html>
