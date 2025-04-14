@@ -1,248 +1,114 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ديوان الشموخ | Diwan Shomoukh</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تطبيق الحجز المتكامل - Diwan Shomoukh</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f8f8f8;
-      color: #333;
-    }
-    header {
-      background-color: #4a2c2a;
-      color: #fff;
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    header h1 {
-      margin: 0;
-    }
-    nav {
-      display: flex;
-      gap: 15px;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .container {
-      padding: 20px;
-    }
-    section {
-      margin-bottom: 40px;
-    }
-    .booking, .menu, .login, .cart {
-      background-color: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    input, select, button {
-      padding: 10px;
-      margin-top: 10px;
-      width: 100%;
-      font-size: 1rem;
-      margin-bottom: 10px;
-    }
-    button {
-      background-color: #4a2c2a;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .lang-toggle {
-      cursor: pointer;
-      background: none;
-      border: none;
-      color: white;
-      font-weight: bold;
-    }
-    .item {
-      display: flex;
-      justify-content: space-between;
-      margin: 10px 0;
-    }
+    body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; direction: rtl; }
+    header, footer { background: #2b4c7e; color: white; text-align: center; padding: 1rem; }
+    nav { background: #4d6fa4; display: flex; justify-content: space-around; padding: 1rem; }
+    nav a { color: white; text-decoration: none; font-weight: bold; }
+    section { padding: 2rem; background-color: white; margin: 1rem; border-radius: 8px; }
+    h2 { color: #2b4c7e; }
+    .session { padding: 1rem; border: 1px solid #ccc; margin: 0.5rem 0; border-radius: 5px; }
+    .available { background: #dff0d8; }
+    .booked { background: #f2dede; }
+    label, input, select, textarea { display: block; width: 100%; margin: 0.5rem 0; }
+    button { background: #2b4c7e; color: white; padding: 0.5rem 1rem; border: none; cursor: pointer; border-radius: 4px; }
+    .stars { display: flex; direction: ltr; justify-content: flex-start; }
+    .stars input { display: none; }
+    .stars label { font-size: 2rem; color: gray; cursor: pointer; }
+    .stars input:checked ~ label, .stars label:hover, .stars label:hover ~ label { color: gold; }
   </style>
 </head>
 <body>
-
   <header>
-    <h1 id="title">ديوان الشموخ</h1>
-    <nav>
-      <a href="#home" id="nav-home">الرئيسية</a>
-      <a href="#booking" id="nav-booking">الحجز</a>
-      <a href="#menu" id="nav-menu">القائمة</a>
-      <a href="#cart" id="nav-cart">الطلبات</a>
-      <a href="#login" id="nav-login">تسجيل الدخول</a>
-      <button class="lang-toggle" onclick="toggleLanguage()">English</button>
-    </nav>
+    <h1>Diwan Shomoukh - نظام الحجز</h1>
   </header>
 
-  <div class="container">
+  <nav>
+    <a href="#booking">الحجز</a>
+    <a href="#branches">الفروع</a>
+    <a href="#status">حالة الجلسات</a>
+    <a href="#review">تقييم العملاء</a>
+    <a href="#payment">بوابة الدفع</a>
+  </nav>
 
-    <!-- Home Section -->
-    <section id="home">
-      <h2 id="welcome-title">مرحبًا بكم في كوفي ديوان الشموخ</h2>
-      <p id="welcome-text">استمتع بأفضل الأجواء، المشروبات، والحلويات الشرقية.</p>
-    </section>
+  <section id="booking">
+    <h2>نموذج الحجز</h2>
+    <form>
+      <label>الاسم الأول:</label>
+      <input type="text" required>
+      <label>اسم العائلة:</label>
+      <input type="text" required>
+      <label>رقم الجوال (+966):</label>
+      <input type="tel" required pattern="\+966[0-9]{9}">
+      <label>نوع الجلسة:</label>
+      <select>
+        <option>كبير</option>
+        <option>صغير</option>
+        <option>VIP</option>
+      </select>
+      <label>التاريخ والوقت:</label>
+      <input type="datetime-local" required>
+      <button type="submit">احجز الآن</button>
+    </form>
+  </section>
 
-    <!-- Booking Section -->
-    <section id="booking" class="booking">
-      <h2 id="booking-title">احجز جلستك</h2>
-      <form id="bookingForm">
-        <label id="session-type-label">نوع الجلسة</label>
-        <select id="session-type">
-          <option>كبير</option>
-          <option>صغير</option>
-          <option>VIP</option>
-        </select>
+  <section id="branches">
+    <h2>فروعنا</h2>
+    <ul>
+      <li><strong>فرع الملك فهد:</strong> الرياض - طريق الملك فهد، أوقات العمل: 4 مساءً - 2 صباحًا</li>
+      <li><strong>فرع العزيزية:</strong> الرياض - حي العزيزية، أوقات العمل: 4 مساءً - 1 صباحًا</li>
+    </ul>
+  </section>
 
-        <label id="name-label">الاسم الكامل</label>
-        <input type="text" id="full-name" required />
+  <section id="status">
+    <h2>حالة الجلسات</h2>
+    <div class="session available">جلسة 1 - متوفرة</div>
+    <div class="session booked">جلسة 2 - محجوزة</div>
+    <div class="session available">جلسة 3 - متوفرة</div>
+    <div class="session booked">جلسة 4 - محجوزة</div>
+  </section>
 
-        <label id="phone-label">رقم الجوال</label>
-        <input type="tel" id="phone" placeholder="+966" required />
+  <section id="review">
+    <h2>تقييم العملاء</h2>
+    <form>
+      <label>الاسم:</label>
+      <input type="text">
+      <label>رأيك:</label>
+      <textarea rows="4"></textarea>
+      <label>التقييم:</label>
+      <div class="stars">
+        <input type="radio" id="star5" name="rate" value="5"><label for="star5">★</label>
+        <input type="radio" id="star4" name="rate" value="4"><label for="star4">★</label>
+        <input type="radio" id="star3" name="rate" value="3"><label for="star3">★</label>
+        <input type="radio" id="star2" name="rate" value="2"><label for="star2">★</label>
+        <input type="radio" id="star1" name="rate" value="1"><label for="star1">★</label>
+      </div>
+      <button type="submit">إرسال التقييم</button>
+    </form>
+  </section>
 
-        <button type="submit" id="book-btn">احجز الآن</button>
-      </form>
-      <div id="booking-result"></div>
-    </section>
+  <section id="payment">
+    <h2>بوابة الدفع</h2>
+    <form>
+      <label>اسم صاحب البطاقة:</label>
+      <input type="text" required>
+      <label>رقم البطاقة (فيزا / مدى):</label>
+      <input type="text" placeholder="0000 1111 2222 3333" required>
+      <label>تاريخ الانتهاء:</label>
+      <input type="month" required>
+      <label>CVV:</label>
+      <input type="number" required>
+      <button type="submit">ادفع الآن</button>
+    </form>
+  </section>
 
-    <!-- Menu Section -->
-    <section id="menu" class="menu">
-      <h2 id="menu-title">قائمة الطعام</h2>
-      <div class="item"><span>قهوة عربية</span><button onclick="addToCart('قهوة عربية')">أضف</button></div>
-      <div class="item"><span>شاي مغربي</span><button onclick="addToCart('شاي مغربي')">أضف</button></div>
-      <div class="item"><span>بسبوسة</span><button onclick="addToCart('بسبوسة')">أضف</button></div>
-      <div class="item"><span>كنافة</span><button onclick="addToCart('كنافة')">أضف</button></div>
-    </section>
+  <footer>
+    <p>Diwan Shomoukh &copy; 2025 - جميع الحقوق محفوظة</p>
+  </footer>
 
-    <!-- Cart Section -->
-    <section id="cart" class="cart">
-      <h2 id="cart-title">سلة الطلبات</h2>
-      <ul id="cart-list"></ul>
-      <button onclick="checkout()" id="checkout-btn">إرسال الطلب</button>
-    </section>
-
-    <!-- Login/Register Section -->
-    <section id="login" class="login">
-      <h2 id="login-title">تسجيل الدخول</h2>
-      <input type="text" placeholder="اسم المستخدم" id="username" />
-      <input type="password" placeholder="كلمة المرور" id="password" />
-      <button onclick="login()" id="login-btn">دخول</button>
-    </section>
-
-  </div>
-
-  <script>
-    const translations = {
-      ar: {
-        title: "ديوان الشموخ",
-        "nav-home": "الرئيسية",
-        "nav-booking": "الحجز",
-        "nav-menu": "القائمة",
-        "nav-cart": "الطلبات",
-        "nav-login": "تسجيل الدخول",
-        "welcome-title": "مرحبًا بكم في كوفي ديوان الشموخ",
-        "welcome-text": "استمتع بأفضل الأجواء، المشروبات، والحلويات الشرقية.",
-        "booking-title": "احجز جلستك",
-        "session-type-label": "نوع الجلسة",
-        "name-label": "الاسم الكامل",
-        "phone-label": "رقم الجوال",
-        "book-btn": "احجز الآن",
-        "menu-title": "قائمة الطعام",
-        "cart-title": "سلة الطلبات",
-        "checkout-btn": "إرسال الطلب",
-        "login-title": "تسجيل الدخول",
-        "login-btn": "دخول"
-      },
-      en: {
-        title: "Diwan Shomoukh",
-        "nav-home": "Home",
-        "nav-booking": "Booking",
-        "nav-menu": "Menu",
-        "nav-cart": "Cart",
-        "nav-login": "Login",
-        "welcome-title": "Welcome to Diwan Shomoukh Café",
-        "welcome-text": "Enjoy the best atmosphere, drinks, and oriental sweets.",
-        "booking-title": "Book Your Session",
-        "session-type-label": "Session Type",
-        "name-label": "Full Name",
-        "phone-label": "Phone Number",
-        "book-btn": "Book Now",
-        "menu-title": "Menu",
-        "cart-title": "Cart",
-        "checkout-btn": "Submit Order",
-        "login-title": "Login",
-        "login-btn": "Login"
-      }
-    };
-
-    let currentLang = 'ar';
-
-    function toggleLanguage() {
-      currentLang = currentLang === 'ar' ? 'en' : 'ar';
-      document.documentElement.lang = currentLang;
-      document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-      document.querySelector(".lang-toggle").textContent = currentLang === 'ar' ? 'English' : 'عربي';
-
-      for (let id in translations[currentLang]) {
-        const el = document.getElementById(id);
-        if (el) el.textContent = translations[currentLang][id];
-      }
-    }
-
-    // Booking Logic
-    document.getElementById("bookingForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const name = document.getElementById("full-name").value;
-      const phone = document.getElementById("phone").value;
-      const session = document.getElementById("session-type").value;
-
-      document.getElementById("booking-result").textContent =
-        currentLang === 'ar'
-          ? `تم حجز جلسة ${session} باسم ${name}، سنقوم بالتواصل عبر الرقم: ${phone}`
-          : `Session ${session} booked for ${name}. We will contact you at: ${phone}`;
-    });
-
-    // Cart logic
-    const cart = [];
-    function addToCart(item) {
-      cart.push(item);
-      renderCart();
-    }
-    function renderCart() {
-      const list = document.getElementById("cart-list");
-      list.innerHTML = "";
-      cart.forEach((item, i) => {
-        const li = document.createElement("li");
-        li.textContent = item;
-        list.appendChild(li);
-      });
-    }
-    function checkout() {
-      alert(currentLang === 'ar' ? "تم إرسال طلبك بنجاح!" : "Your order has been submitted!");
-      cart.length = 0;
-      renderCart();
-    }
-
-    // Login Logic
-    function login() {
-      const user = document.getElementById("username").value;
-      const pass = document.getElementById("password").value;
-      alert(
-        currentLang === 'ar'
-          ? `مرحبًا ${user}، تم تسجيل الدخول.`
-          : `Welcome ${user}, you are logged in.`
-      );
-    }
-  </script>
 </body>
 </html>
