@@ -1,202 +1,339 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>لوحة إدارة الحجوزات</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام حجز جلسات - مهيلة ديوان الشموخ</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+
     <style>
+        /* أنماط أساسية */
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #27ae60;
-            --background: #f8f9fa;
+            --primary-color: #2c786c;
+            --secondary-color: #ff9800;
+            --background-gradient: linear-gradient(135deg, rgba(244, 244, 244, 0.95) 0%, rgba(233, 236, 239, 0.95) 100%);
+            --background: linear-gradient(135deg, rgba(248, 249, 250, 0.95) 0%, rgba(233, 236, 239, 0.95) 100%);
         }
 
         body {
             font-family: 'Tajawal', sans-serif;
             direction: rtl;
-            background: var(--background);
             margin: 0;
-            padding: 20px;
+            min-height: 100vh;
+            background: var(--background-gradient),
+            background: var(--background),
+                        url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7') center/cover fixed;
         }
 
-        .admin-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .filters {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .filter-item {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background: white;
-        }
-
-        .bookings-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 10px;
+        /* تصميم الحاوية الرئيسية */
+        .main-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: rgba(255, 255, 255, 0.97);
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            position: relative;
             overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .bookings-table th,
-        .bookings-table td {
-            padding: 15px;
+        /* الهيدر */
+        .header-section {
             text-align: center;
-            border-bottom: 1px solid #eee;
+            padding: 2rem;
+@@ -49,10 +45,8 @@
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin: 0.5rem 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .bookings-table th {
+        /* نموذج الحجز */
+        .booking-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+@@ -87,39 +81,41 @@
+            box-shadow: 0 0 15px rgba(44, 120, 108, 0.2);
+        }
+
+        /* قسم التأكيد */
+        .btn {
             background: var(--primary-color);
             color: white;
-        }
-
-        .action-buttons button {
-            margin: 0 5px;
-            padding: 5px 10px;
+            padding: 15px 30px;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: 0.3s;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
         }
 
-        .edit-btn { background: #f1c40f; color: white; }
-        .delete-btn { background: #e74c3c; color: white; }
-        .save-btn { background: #2ecc71; color: white; }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(44, 120, 108, 0.3);
+        }
 
+        .confirmation-section {
+            display: none;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .booking-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        /* تأثيرات الحركة */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* تصميم متجاوب */
         @media (max-width: 768px) {
-            .bookings-table {
-                display: block;
-                overflow-x: auto;
+            .main-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            
+            .header-section h1 {
+                font-size: 2rem;
             }
         }
     </style>
 </head>
-<body>
-    <div class="admin-container">
-        <div class="header">
-            <h1>لوحة إدارة الحجوزات</h1>
-            <div class="filters">
-                <input type="date" id="filter-date" class="filter-item" placeholder="تصفية بالتاريخ">
-                <select id="filter-type" class="filter-item">
-                    <option value="">جميع الأنواع</option>
-                    <option value="جلسة صغير">جلسة صغير</option>
-                    <option value="جلسة كبيرة">جلسة كبيرة</option>
-                </select>
-                <input type="text" id="search" class="filter-item" placeholder="بحث بالاسم أو الرقم">
-            </div>
-        </div>
+@@ -131,13 +127,11 @@ <h2>نظام الحجوزات الذكي</h2>
+        </header>
 
-        <table class="bookings-table">
-            <thead>
-                <tr>
-                    <th>رقم الحجز</th>
-                    <th>اسم العميل</th>
-                    <th>نوع الجلسة</th>
-                    <th>التاريخ</th>
-                    <th>الوقت</th>
-                    <th>المبلغ المدفوع</th>
-                    <th>الحالة</th>
-                    <th>الإجراءات</th>
-                </tr>
-            </thead>
-            <tbody id="bookings-list">
-                <!-- البيانات تظهر هنا -->
-            </tbody>
-        </table>
+        <form id="bookingForm" class="booking-form">
+            <!-- حقل رقم الجلسة الجديد -->
+            <div class="form-group">
+                <i class="fas fa-hashtag"></i>
+                <input type="text" id="sessionId" class="form-input" placeholder="رقم الجلسة" readonly>
+            </div>
+
+            <!-- باقي الحقول مع تحسين التنسيق -->
+            <div class="form-group">
+                <i class="fas fa-couch"></i>
+                <select id="sessionType" class="form-input" required>
+@@ -146,58 +140,177 @@ <h2>نظام الحجوزات الذكي</h2>
+                </select>
+            </div>
+
+            <!-- باقي العناصر بنفس النمط -->
+            <div class="form-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="clientName" class="form-input" placeholder="اسم العميل" required>
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-phone"></i>
+                <input type="tel" id="phone" class="form-input" placeholder="رقم الهاتف" required>
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-calendar-day"></i>
+                <input type="date" id="bookingDate" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-clock"></i>
+                <input type="time" id="bookingTime" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-tag"></i>
+                <input type="number" id="price" class="form-input" placeholder="السعر (ريال)" required>
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-money-bill-wave"></i>
+                <input type="number" id="paid" class="form-input" placeholder="المبلغ المدفوع (ريال)" required>
+            </div>
+
+            <button type="submit" class="btn">
+                <i class="fas fa-check-circle"></i>
+                تأكيد الحجز
+            </button>
+        </form>
+
+        <section class="confirmation-section" id="confirmation">
+            <!-- تصميم محسّن لقسم التأكيد -->
+            <h2>تفاصيل الحجز</h2>
+            <div class="booking-details">
+                <!-- تفاصيل الحجز مع إضافة رقم الجلسة -->
+                <p><strong>رقم الجلسة:</strong> <span id="confirmSessionId"></span></p>
+                <p><strong>نوع الجلسة:</strong> <span id="confirmSessionType"></span></p>
+                <p><strong>اسم العميل:</strong> <span id="confirmClientName"></span></p>
+                <p><strong>رقم الهاتف:</strong> <span id="confirmPhone"></span></p>
+                <p><strong>تاريخ الحجز:</strong> <span id="confirmBookingDate"></span></p>
+                <p><strong>وقت الحجز:</strong> <span id="confirmBookingTime"></span></p>
+                <p><strong>السعر:</strong> <span id="confirmPrice"></span> ريال</p>
+                <p><strong>المدفوع:</strong> <span id="confirmPaid"></span> ريال</p>
+                <p><strong>المتبقي:</strong> <span id="confirmRemaining"></span> ريال</p>
+            </div>
+            
+            <button class="btn pdf-btn" onclick="generatePDF()">
+                <i class="fas fa-file-pdf"></i>
+                تحميل PDF
+            </button>
+            
+            <a href="admin.html" class="btn" style="margin-top: 1rem;">
+                <i class="fas fa-cog"></i>
+                لوحة التحكم
+            </a>
+        </section>
     </div>
 
     <script>
-        // تهيئة Firebase
+        // نظام إدارة الحجوزات
+        class BookingSystem {
+            constructor() {
+                this.initForm();
+                this.setupEventListeners();
+            }
+        // Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyABCDEFGHIJKLMNOPQRSTUVWXYZ12345678",
-            authDomain: "your-project-id.firebaseapp.com",
-            databaseURL: "https://your-project-id.firebaseio.com",
-            projectId: "your-project-id",
-            storageBucket: "your-project-id.appspot.com",
-            messagingSenderId: "123456789012",
-            appId: "1:123456789012:web:abcdef1234567890"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            databaseURL: "YOUR_DATABASE_URL",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
+            initForm() {
+                document.getElementById('sessionId').value = this.generateSessionId();
+            }
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // تحميل الحجوزات
-        function loadBookings() {
-            database.ref('bookings').on('value', (snapshot) => {
-                const bookings = snapshot.val();
-                const tbody = document.getElementById('bookings-list');
-                tbody.innerHTML = '';
-
-                for (const key in bookings) {
-                    const booking = bookings[key];
-                    const row = `
-                        <tr>
-                            <td>${booking.bookingNumber}</td>
-                            <td>${booking.clientName}</td>
-                            <td>${booking.sessionType}</td>
-                            <td>${booking.bookingDate}</td>
-                            <td>${booking.bookingTime}</td>
-                            <td>${booking.paid} ريال</td>
-                            <td>${booking.paid >= booking.price ? 'مكتمل' : 'جزئي'}</td>
-                            <td class="action-buttons">
-                                <button class="edit-btn" onclick="editBooking('${key}')"><i class="fas fa-edit"></i></button>
-                                <button class="delete-btn" onclick="deleteBooking('${key}')"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                    `;
-                    tbody.innerHTML += row;
-                }
-            });
-        }
-
-        // حذف الحجز
-        function deleteBooking(key) {
-            if (confirm('هل أنت متأكد من حذف هذا الحجز؟')) {
-                database.ref('bookings/' + key).remove()
-                .then(() => alert('تم الحذف بنجاح'))
-                .catch(() => alert('حدث خطأ أثناء الحذف'));
+            generateSessionId() {
+                return `SID-${Date.now().toString().slice(-8)}`;
             }
+        // Generate unique session ID
+        function generateSessionId() {
+            return `SID-${Date.now().toString(36).toUpperCase()}`;
         }
 
-        // التعديل على الحجز
-        function editBooking(key) {
-            // إضافة منطق التعديل هنا
-            alert('ميزة التعديل قيد التطوير');
-        }
+            setupEventListeners() {
+                document.getElementById("bookingForm").addEventListener("submit", (e) => this.handleSubmit(e));
+            }
+        // Initialize form
+        document.getElementById('sessionId').value = generateSessionId();
 
-        // التصفية والبحث
-        document.getElementById('search').addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            filterBookings({search: searchTerm});
+        // Form submission handler
+        document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            handleSubmit(event) {
+                event.preventDefault();
+                if (!this.validateForm()) return;
+            const bookingData = {
+                sessionId: document.getElementById('sessionId').value,
+                sessionType: document.getElementById('sessionType').value,
+                clientName: document.getElementById('clientName').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                bookingDate: document.getElementById('bookingDate').value,
+                bookingTime: document.getElementById('bookingTime').value,
+                price: parseFloat(document.getElementById('price').value),
+                paid: parseFloat(document.getElementById('paid').value),
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            };
+
+            try {
+                // Save to Firebase
+                await database.ref('bookings/' + bookingData.sessionId).set(bookingData);
+
+                const bookingData = this.collectFormData();
+                this.displayConfirmation(bookingData);
+                this.generatePDF(bookingData);
+                // Show confirmation
+                showConfirmation(bookingData);
+            } catch (error) {
+                showError('حدث خطأ في حفظ البيانات');
+            }
         });
 
-        function filterBookings(filters) {
-            // إضافة منطق التصفية هنا
+            collectFormData() {
+                return {
+                    sessionId: document.getElementById("sessionId").value,
+                    // باقي البيانات
+                };
+            }
+        // Show confirmation details
+        function showConfirmation(data) {
+            document.getElementById('confirmSessionId').textContent = data.sessionId;
+            document.getElementById('confirmSessionType').textContent = data.sessionType;
+            document.getElementById('confirmClientName').textContent = data.clientName;
+            document.getElementById('confirmPhone').textContent = data.phone;
+            document.getElementById('confirmBookingDate').textContent = data.bookingDate;
+            document.getElementById('confirmBookingTime').textContent = data.bookingTime;
+            document.getElementById('confirmPrice').textContent = data.price.toFixed(2);
+            document.getElementById('confirmPaid').textContent = data.paid.toFixed(2);
+            document.getElementById('confirmRemaining').textContent = (data.price - data.paid).toFixed(2);
+
+            // باقي الدوال مع تحسين التنظيم
+            document.getElementById('bookingForm').style.display = 'none';
+            document.getElementById('confirmation').style.display = 'block';
         }
 
-        // تحميل البيانات عند بدء التشغيل
-        loadBookings();
+        // بدء النظام عند تحميل الصفحة
+        window.addEventListener('DOMContentLoaded', () => new BookingSystem());
+        // Generate PDF
+        async function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            doc.setFontSize(18);
+            doc.text('تأكيد الحجز - مهيلة ديوان الشموخ', 15, 20);
+            
+            const details = [
+                `رقم الجلسة: ${document.getElementById('confirmSessionId').textContent}`,
+                `نوع الجلسة: ${document.getElementById('confirmSessionType').textContent}`,
+                `اسم العميل: ${document.getElementById('confirmClientName').textContent}`,
+                `رقم الهاتف: ${document.getElementById('confirmPhone').textContent}`,
+                `التاريخ: ${document.getElementById('confirmBookingDate').textContent}`,
+                `الوقت: ${document.getElementById('confirmBookingTime').textContent}`,
+                `السعر: ${document.getElementById('confirmPrice').textContent} ريال`,
+                `المدفوع: ${document.getElementById('confirmPaid').textContent} ريال`,
+                `المتبقي: ${document.getElementById('confirmRemaining').textContent} ريال`
+            ];
+
+            details.forEach((text, index) => {
+                doc.text(text, 15, 40 + (index * 10));
+            });
+
+            const pdfBlob = doc.output('blob');
+            const pdfUrl = URL.createObjectURL(pdfBlob);
+            
+            // Download PDF
+            const link = document.createElement('a');
+            link.href = pdfUrl;
+            link.download = `حجز_${document.getElementById('confirmSessionId').textContent}.pdf`;
+            link.click();
+
+            // Open WhatsApp
+            const phone = document.getElementById('confirmPhone').textContent.replace(/^0/, '966');
+            window.open(`https://wa.me/${phone}?text=مرحباً، تم تأكيد حجزك بنجاح`, '_blank');
+        }
+
+        // Error handling
+        function showError(message) {
+            alert(message);
+        }
     </script>
 </body>
 </html>
+
